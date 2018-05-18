@@ -30,7 +30,7 @@
 #include <QFileDialog>
 #include <QSignalMapper>
 #include <QDateTime>
-#include <QShortCut>
+#include <QShortcut>
 #include <QAction>
 #include <QMessageBox>
 #include <QDialogButtonBox>

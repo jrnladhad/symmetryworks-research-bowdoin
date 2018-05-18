@@ -1,4 +1,4 @@
-#include "Interface.h"
+#include "interface.h"
 /*
  *
  *  Interface class manages the UI elements for wallgen.
@@ -1275,7 +1275,7 @@ void Interface::setImagePushed()
     }
     
     qDebug() << "opening file:" << fileName;
-    if (!inFile.open(QIODevice::ReadOnly)) {
+    if (!inFile.open(QIODevice::ReadWrite)) {
         return;
     }
     
@@ -2257,9 +2257,33 @@ void Interface::updateShifting(const QPoint &point)
 
 void Interface::updateImageDataGraph()
 {
-    
-    imagePixmap.convertFromImage(QImage(imageSetPath + "/" + openImageName));
+    QRgb value;
+    QImage original(imageSetPath + "/" + openImageName);
+    original.load(imageSetPath + "/" + openImageName);
+    original = QImage(original.width(), original.height() , QImage::Format_ARGB32);
+    for(int i=0; i<original.height(); i++){
+        QRgb *line = (QRgb *)original.scanLine(i);
+        for(int j=0; j<original.width(); j++){
+            QRgb pixelData = line[j];
+            unsigned int red = qRed(pixelData);
+            unsigned int green = qGreen(pixelData);
+            unsigned int blue = qBlue(pixelData);
+            value = qRgba(red, green, blue, 127);
+            original.setPixel(j,i, value);
+        }
+    }
+    imagePixmap.convertFromImage(original);
     imagePixmap = imagePixmap.scaledToHeight(previewSize);
+    paintEngine();
+    QPainter paint(this);
+    QPen pointPen(Qt::black);
+    QBrush pointBrush(Qt::gray);
+    prevDataSeries->setPen(pointPen);
+    prevDataSeries->setBrush(pointBrush);
+    prevDataSeries->setMarkerSize(5.0);
+    paint.begin(&imagePixmap);
+    paint.drawPoint(imagePixmap.width()/2, imagePixmap.height()/2);
+    paint.end();
     imageLabel->setPixmap(imagePixmap);
     
     prevDataSeries->replace(imageDataSeries->pointsVector());
