@@ -25,6 +25,7 @@ class RenderThread : public QThread
     Q_OBJECT
     
 public:
+
     RenderThread(QObject *parent = 0) : QThread(parent) { }
     explicit RenderThread(AbstractFunction *function, ColorWheel *colorwheel, Settings *settings, QSize outputSize, QObject *parent = 0);
     ~RenderThread();
@@ -56,6 +57,8 @@ signals:
     void newImageDataPoint(const ComplexValue &data);
     
 private:
+
+
     QMutex mutex;
     QWaitCondition condition;
     QWaitCondition *controllerCondition;

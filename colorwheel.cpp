@@ -4,7 +4,7 @@ ColorWheel::ColorWheel(QObject *parent) :
 QObject(parent)
 {
     currentSel = 0;
-    image = QImage(image_width, image_height, QImage::Format_ARGB32_Premultiplied);
+    image = QImage(image_dim, image_dim, QImage::Format_ARGB32_Premultiplied);
     image.fill(MAX_RGB);
     
     //initialize zoneVect
@@ -82,9 +82,7 @@ QRgb ColorWheel::operator() (std::complex<double> zin)
 void ColorWheel::loadImage(QString filename)
 {
     QImage raw(filename);
-    image_height = raw.height();
-    image_width = raw.width();
-    image = raw.scaled(image_width, image_height, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+    image = raw.scaled(image_dim, image_dim, Qt::IgnoreAspectRatio, Qt::FastTransformation);
 }
 
 QRgb ColorWheel::IcosColor(std::complex<double> zin)
@@ -523,15 +521,13 @@ QRgb ColorWheel::FromImage(std::complex<double> zin)
     
     if(x >= -2.0 && x < 2.0 && y >= -2.0 && y < 2.0)      //our image is defined within the Cartesian coordinates
     {                                                       // -2 <= x <= 2  and -2 <= y <= 2
-        int translated_x = (int) ((x + 2.0) * (image_width / 4.0));
-        int translated_y = (int) image_height - ((y + 2.0) * (image_height / 4.0));
-        
+        int translated_x = (int) ((x + 2.0) * (image_dim / 4.0));
+        int translated_y = (int) image_dim - ((y + 2.0) * (image_dim / 4.0));
         color = image.pixel(translated_x, translated_y);
     }
     else {
         color = overflowColor;
     }
-    
     return color.rgb();
 }
 

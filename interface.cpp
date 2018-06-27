@@ -1,4 +1,4 @@
-#include "interface.h"
+ #include "interface.h"
 /*
  *
  *  Interface class manages the UI elements for wallgen.
@@ -471,8 +471,8 @@ void Interface::initPatternType()
     }
     
     // function selector
-    functionSel->addItem("Hex3");
-    functionSel->addItem("Hex6");
+    functionSel->addItem("p3");
+    functionSel->addItem("p6");
     functionSel->addItem("p4");
     functionSel->addItem("p2");
     functionSel->addItem("p1");
@@ -488,7 +488,7 @@ void Interface::initPatternType()
     functionSel->addItem("pm");
     functionSel->addItem("pg");
     functionSel->addItem("cm");
-    functionSel->addItem("Original");
+    functionSel->addItem("ComplexPoly");
     
     // color wheel selector
     colorwheelSel->addItem("IcosColor");
@@ -638,12 +638,15 @@ void Interface::initImageProps()
     
     imageStretchXLayout = new QHBoxLayout();
     imageStretchYLayout = new QHBoxLayout();
+    aspectRatioLayout = new QHBoxLayout();
     
-    worldWidthLabel = new QLabel(tr("Horizontal Stretch"), imagePropsBox);
-    worldHeightLabel = new QLabel(tr("Vertical Stretch"), imagePropsBox);
+    worldWidthLabel = new QLabel(tr("Horizontal Scaling"), imagePropsBox);
+    worldHeightLabel = new QLabel(tr("Vertical Scaling"), imagePropsBox);
+    scalingAspectRatioLabel = new QLabel(tr("Lock Aspect Ratio"), imagePropsBox);
     
     worldWidthEditSlider = new QDoubleSlider(imagePropsBox);
     worldHeightEditSlider = new QDoubleSlider(imagePropsBox);
+    worldAspectRatioCheckBox = new QCheckBox(imagePropsBox);
     worldWidthEdit = new CustomLineEdit(imagePropsBox);
     worldHeightEdit = new CustomLineEdit(imagePropsBox);
     worldWidthEdit->setValidator(doubleValidate);
@@ -660,6 +663,9 @@ void Interface::initImageProps()
     imageStretchYLayout->addWidget(worldHeightLabel);
     imageStretchYLayout->addWidget(worldHeightEditSlider);
     imageStretchYLayout->addWidget(worldHeightEdit);
+
+    aspectRatioLayout->addWidget(scalingAspectRatioLabel);
+    aspectRatioLayout->addWidget(worldAspectRatioCheckBox);
     
     XShiftEditSlider->setFixedWidth(100);
     YShiftEditSlider->setFixedWidth(100);
@@ -693,6 +699,7 @@ void Interface::initImageProps()
     imagePropsBoxLayout->addLayout(imageShiftYLayout);
     imagePropsBoxLayout->addLayout(imageStretchXLayout);
     imagePropsBoxLayout->addLayout(imageStretchYLayout);
+    imagePropsBoxLayout->addLayout(aspectRatioLayout);
     
     
 }
@@ -843,6 +850,7 @@ void Interface::connectAllSignals()
     connect(worldHeightEditSlider, SIGNAL(newSliderAction(QObject*, double, double)), this, SLOT(createUndoAction(QObject*, double, double)));
     connect(worldWidthEdit, SIGNAL(returnPressed()), this, SLOT(changeWorldWidth()));
     connect(worldHeightEdit, SIGNAL(returnPressed()), this, SLOT(changeWorldHeight()));
+    connect(worldAspectRatioCheckBox, SIGNAL(clicked(bool)), this, SLOT(aspectRatioLocked(bool)));
     connect(XShiftEditSlider, SIGNAL(doubleValueChanged(double)), this, SLOT(changeXCorner(double)));
     connect(XShiftEditSlider, SIGNAL(newSliderAction(QObject*, double, double)), this, SLOT(createUndoAction(QObject*, double, double)));
     connect(YShiftEditSlider, SIGNAL(doubleValueChanged(double)), this, SLOT(changeYCorner(double)));
@@ -1281,7 +1289,7 @@ void Interface::setImagePushed()
     
     currColorWheel->setCurrent(9);
     currColorWheel->loadImage(fileName);
-    
+
     QDir stickypath(fileName);
     stickypath.cdUp();
     imageSetPath = stickypath.path();
@@ -1782,60 +1790,107 @@ void Interface::changeAspectRatio()
     
 }
 
+void Interface::aspectRatioLocked(bool checked){
+    if(checked)
+        aspectRatioCheckLock = true;
+    else
+        aspectRatioCheckLock = false;
+}
+
+void Interface::changingSliderWorldHeight(double val){
+    settings->Height = val;
+    worldHeightEdit->setText(QString::number(val));
+    worldHeightEdit->setModified(false);
+}
+
+void Interface::changingSliderWorldWidth(double val){
+    settings->Width = val;
+    worldWidthEdit->setText(QString::number(val));
+    worldWidthEdit->setModified(false);
+}
+
+void Interface::changingBoxWorldHeight(double val){
+    settings->Height = val;
+    createUndoAction(worldHeightEdit, worldHeightEditSlider->value() / 100.0, val);
+    worldHeightEditSlider->blockSignals(true);
+    worldHeightEditSlider->setValue(val * 100.0);
+    worldHeightEditSlider->blockSignals(false);
+    worldHeightEdit->setModified(false);
+}
+
+void Interface::changingBoxWorldWidth(double val){
+    settings->Width = val;
+    createUndoAction(worldWidthEdit, worldWidthEditSlider->value() / 100.0, val);
+    worldWidthEditSlider->blockSignals(true);
+    worldWidthEditSlider->setValue(val * 100.0);
+    worldWidthEditSlider->blockSignals(false);
+    worldWidthEdit->setModified(false);
+}
+
 //changing slider values
 void Interface::changeWorldHeight(double val)
 {
-    settings->Height = val;
-    
-    worldHeightEdit->setText(QString::number(val));
-    worldHeightEdit->setModified(false);
-    updatePreviewDisplay();
+    if(aspectRatioCheckLock){
+        changingSliderWorldHeight(val);
+        changingSliderWorldWidth(val);
+        updatePreviewDisplay();
+    }
+    else{
+        changingSliderWorldHeight(val);
+        updatePreviewDisplay();
+    }
 }
 
 //changing edit box values
 void Interface::changeWorldHeight()
 {
     double val = worldHeightEdit->text().toDouble();
-    settings->Height = val;
-    
-    createUndoAction(worldHeightEdit, worldHeightEditSlider->value() / 100.0, val);
-    
-    worldHeightEditSlider->blockSignals(true);
-    worldHeightEditSlider->setValue(val * 100.0);
-    worldHeightEditSlider->blockSignals(false);
-    worldHeightEdit->setModified(false);
-    
-    updatePreviewDisplay();
+    if(aspectRatioCheckLock){
+        worldWidthEdit->setText(worldHeightEdit->text());
+        changingBoxWorldHeight(val);
+        changingBoxWorldWidth(val);
+        updatePreviewDisplay();
+    }
+    else{
+        changingBoxWorldHeight(val);
+        updatePreviewDisplay();
+    }
 }
 
 //changing slider values
 void Interface::changeWorldWidth(double val)
 {
-    settings->Width = val;
-    worldWidthEdit->setText(QString::number(val));
-    worldWidthEdit->setModified(false);
-    updatePreviewDisplay();
+    if(aspectRatioCheckLock){
+        changingSliderWorldWidth(val);
+        changingSliderWorldHeight(val);
+        updatePreviewDisplay();
+    }
+    else{
+        changingSliderWorldWidth(val);
+        updatePreviewDisplay();
+    }
 }
 
 //changing edit box values
 void Interface::changeWorldWidth()
 {
     double val = worldWidthEdit->text().toDouble();
-    settings->Width = val;
-    
-    createUndoAction(worldWidthEdit, worldWidthEditSlider->value() / 100.0, val);
-    
-    worldWidthEditSlider->blockSignals(true);
-    worldWidthEditSlider->setValue(val * 100.0);
-    worldWidthEditSlider->blockSignals(false);
-    worldWidthEdit->setModified(false);
-    updatePreviewDisplay();
+
+    if(aspectRatioCheckLock){
+        worldHeightEdit->setText(worldWidthEdit->text());
+        changingBoxWorldWidth(val);
+        changingBoxWorldHeight(val);
+        updatePreviewDisplay();
+    }
+    else{
+        changingBoxWorldWidth(val);
+        updatePreviewDisplay();
+    }
 }
 
 //changing edit box values
 void Interface::changeXCorner(double val)
 {
-    
     settings->XCorner = val;
     XShiftEdit->setText(QString::number(val));
     XShiftEdit->setModified(false);
@@ -2017,7 +2072,7 @@ void Interface::startImageExport()
     dispLayout->insertLayout(2, exportProgressBar->layout);
     
     QImage *output = new QImage(settings->OWidth, settings->OHeight, QImage::Format_RGB32);
-    
+
     imageExportPort->exportImage(output, fileName);
     
 }
@@ -2272,20 +2327,24 @@ void Interface::updateImageDataGraph()
             original.setPixel(j,i, value);
         }
     }
+    float numberOfPixels = selectedPixelX.size();
+    qDebug()<<"number of pixels:"<<numberOfPixels<<"\n";
+    for(float i= 0; i< numberOfPixels; i++){
+        float pixelXCoord = selectedPixelX[i]+(original.width()/2);
+        float pixelYCoord = selectedPixelY[i] + (original.height()/2);
+        qDebug()<<"X:"<<pixelXCoord<<"Y:"<<pixelYCoord<<"\n";
+        QRgb pixelData = original.pixel(pixelXCoord, pixelYCoord);
+        unsigned int red = qRed(pixelData);
+        unsigned int green = qGreen(pixelData);
+        unsigned int blue = qBlue(pixelData);
+        //qDebug()<<"red:"<<red<<"blue:"<<blue<<"green:"<<green<<"\n";
+        value = qRgba(red, green, blue, 256);
+        original.setPixel(pixelXCoord,pixelYCoord, value);
+    }
+
     imagePixmap.convertFromImage(original);
     imagePixmap = imagePixmap.scaledToHeight(previewSize);
-    paintEngine();
-    QPainter paint(this);
-    QPen pointPen(Qt::black);
-    QBrush pointBrush(Qt::gray);
-    prevDataSeries->setPen(pointPen);
-    prevDataSeries->setBrush(pointBrush);
-    prevDataSeries->setMarkerSize(5.0);
-    paint.begin(&imagePixmap);
-    paint.drawPoint(imagePixmap.width()/2, imagePixmap.height()/2);
-    paint.end();
     imageLabel->setPixmap(imagePixmap);
-    
     prevDataSeries->replace(imageDataSeries->pointsVector());
 }
 

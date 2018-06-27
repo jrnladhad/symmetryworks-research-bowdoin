@@ -89,59 +89,8 @@ public:
 
 ////////////////////////////////////////////////////////////////
 
-//#define Kgen 1.6
-//#define Lgen 1
-// locSym function uses a special lattice with qSqrt 7
-
-//#define Xgen ( 2*pi*x ) original defaults
-//#define Ygen ( 2*pi*(x/Kgen + y/Lgen) )
-
-#define Xloc ( 2*pi*x-2*pi*y/q7 ) //for hex lattice without rotation
-#define Yloc ( 4*pi*y/q7 )
-
-
-class locSymFunction : public AbstractFunction
-{
-public:
-    locSymFunction() { terms = 1; refresh(); }
-    locSymFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    locSymFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new locSymFunction(*this); };
-};
-////////////////////////////////////////////////////////////////
-class locSym2Function : public AbstractFunction
-{
-public:
-    locSym2Function() { terms = 1; refresh(); }
-    locSym2Function(unsigned int in_terms) { terms = in_terms; refresh(); }
-    locSym2Function(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new locSym2Function(*this); };
-};
-////////////////////////////////////////////////////////////////
-class locSymCTFunction : public AbstractFunction
-{
-public:
-    locSymCTFunction() { terms = 1; refresh(); }
-    locSymCTFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    locSymCTFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new locSymCTFunction(*this); };
-};
-////////////////////////////////////////////////////////////////
-
 #define Kgen2 1.6
-#define Lgen2 1
+#define Lgen2 1.0
 
 //#define Xgen2 ( 2*pi*x ) original defaults
 //#define Ygen2 ( 2*pi*(x/Kgen2 + y/Lgen2) )
@@ -165,8 +114,8 @@ public:
 ////////////////////////////////////////////////////////////////
 
 
-#define Xhex3 (2*pi*x+2*pi*y/q3)
-#define Yhex3 (4*pi*y/q3)
+#define Xhex3 (4*pi*x+4*pi*y/q3)
+#define Yhex3 (8*pi*y/q3)
 
 class hex3Function : public AbstractFunction
 {
@@ -217,22 +166,7 @@ public:
     virtual AbstractFunction* clone() const { return new p3m1Function(*this); };
     
 };
-////////////////////////////////////////////////////////////////
 
-class hex3CTFunction : public AbstractFunction
-{
-public:
-    hex3CTFunction() { terms = 1; refresh(); }
-    hex3CTFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    hex3CTFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new hex3CTFunction(*this); };
-    
-    
-};
 ////////////////////////////////////////////////////////////////
 
 #define Xhex6 (2*pi*x+2*pi*y/q3)
@@ -278,18 +212,6 @@ public:
 #define Xrect ( (2*pi*x) / Krect)
 #define Yrect ( (2*pi*y) / Lrect)
 
-class rectangularFunction : public AbstractFunction
-{
-public:
-    rectangularFunction() { terms = 1; refresh(); }
-    rectangularFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    rectangularFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new rectangularFunction(*this); };
-};
 ///////////////////////////
 class pmFunction : public AbstractFunction
 {
@@ -371,30 +293,17 @@ public:
 };
 
 ////////////////////////////////////////////////////////////////
-#define Krect2 1.6
-#define Lrect2 1
+#define Krect2 0.4
+#define Lrect2 0.3
 
 #define Xrect2 ( (2*pi*x) / Krect2)
 #define Yrect2 ( (2*pi*y) / Lrect2)
 
-class rectangularpairedFunction : public AbstractFunction
-{
-public:
-    rectangularpairedFunction() { terms = 1; refresh(); }
-    rectangularpairedFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    rectangularpairedFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new rectangularpairedFunction(*this); };
-};
-
 ////////////////////////////////////////////////////////////////
 //Note: Switched x and y to make vertical stripes 7/31/15
 
-#define Krhombic 1.6
-#define Lrhombic 1
+#define Krhombic 0.4
+#define Lrhombic 0.3
 
 #define Xrhombic (pi * (y/Krhombic + x/Lrhombic) )
 #define Yrhombic (pi * (y/Krhombic - x/Lrhombic) )
@@ -416,25 +325,11 @@ public:
 
 ////////////////////////////////////////////////////////////////
 
-#define Krhombic2 1.6
-#define Lrhombic2 1
+#define Krhombic2 0.4
+#define Lrhombic2 0.3
 
 #define Xrhombic2 (pi * (x/Krhombic2 + y/Lrhombic2) )
 #define Yrhombic2 (pi * (x/Krhombic2 - y/Lrhombic2) )
-
-class rhombicpairedFunction : public AbstractFunction
-{
-public:
-    rhombicpairedFunction() { terms = 1; refresh(); }
-    rhombicpairedFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    rhombicpairedFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new rhombicpairedFunction(*this); };
-    
-};
 
 ////////////////////////////////////////////////////////////////
 class cmmFunction : public AbstractFunction
@@ -453,8 +348,8 @@ public:
 
 ////////////////////////////////////////////////////////////////
 
-#define Xsquare (2*pi*x)
-#define Ysquare (2*pi*y)
+#define Xsquare (4*pi*x)
+#define Ysquare (4*pi*y)
 
 class squareFunction : public AbstractFunction
 {
@@ -502,73 +397,7 @@ public:
     
     
 };
-///////////////////////////////////////////////////////////////
 
-
-class squareMFunction : public AbstractFunction
-{
-public:
-    squareMFunction() { terms = 1; refresh(); }
-    squareMFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    squareMFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new squareMFunction(*this); };
-    
-    
-};
-///////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-
-
-
-class squareTFunction : public AbstractFunction
-{
-public:
-    squareTFunction() { terms = 1; refresh(); }
-    squareTFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    squareTFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new squareTFunction(*this); };
-    
-    
-};
-///////////////////////////////////////////////////////////////
-
-class holoFunction : public AbstractFunction
-{
-public:
-    holoFunction() { terms = 1; refresh(); }
-    holoFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    holoFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new holoFunction(*this); };
-    
-};
-
-///////////////////////////////////////////////////////////////
-
-class contFunction : public AbstractFunction
-{
-public:
-    contFunction() { terms = 1; refresh(); }
-    contFunction(unsigned int in_terms) { terms = in_terms; refresh(); }
-    contFunction(QVector<coeffpair> in_coeffs, QVector<freqpair> in_freqs) {initWithVectors(in_coeffs, in_freqs);}
-    
-    std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
-    std::complex<double> operator() (double i, double j);
-    
-    virtual AbstractFunction* clone() const { return new contFunction(*this); };
-    
-};
 ///////////////////////////////////////////////////////////////
 
 class zzbarFunction : public AbstractFunction

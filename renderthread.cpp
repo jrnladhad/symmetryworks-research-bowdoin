@@ -36,7 +36,7 @@ void RenderThread::render(QPoint topLeft, QPoint bottomRight, QWaitCondition *co
     
     bottomRightXValue = bottomRight.x();
     bottomRightYValue = bottomRight.y();
-    
+    //qDebug()<<"bottomRightXValue:"<<bottomRightXValue<<"bottomRightYValue:"<<bottomRightYValue<<"\n";
     this->controllerCondition = controllerCondition;
     worldYStart1 = currSettings->Height + currSettings->YCorner;
     worldYStart2 = currSettings->Height/overallHeight;
@@ -65,8 +65,10 @@ void RenderThread::run()
         
         double outputWidth = bottomRightXValue - topLeftXValue;
         double outputHeight = bottomRightYValue - topLeftYValue;
-        
+
         int translated = bottomRightXValue;
+
+        ColorWheel selectedPixel;
         std::complex<double> fout;
         QPoint topLeft = this->topLeft;
         QVector<QVector<QRgb>> colorMap(outputWidth, QVector<QRgb>(outputHeight));
@@ -110,7 +112,6 @@ void RenderThread::run()
         // qDebug() << currentThreadId() << "FINISHES RENDERING";
         
         mutex.lock();
-        
         if (!restart) {
             emit renderingFinished(topLeft, colorMap);
 

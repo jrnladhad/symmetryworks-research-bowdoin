@@ -47,10 +47,12 @@
 #include <QHeaderView>
 #include <QToolTip>
 #include <QStandardPaths>
+#include <QCheckBox>
 
 #include "historydisplay.h"
 #include "polarplane.h"
 #include "port.h"
+#include "colorwheel.h"
 
 #define MAX_NUM_TERMS 99
 
@@ -126,8 +128,7 @@ protected:
     
 private:
     int index;
-    
-    
+    ColorWheel selectedPixel;
 };
 
 // QSlider subclass that takes doubles
@@ -497,15 +498,18 @@ public:
     QHBoxLayout *imageShiftYLayout;
     QHBoxLayout *imageStretchXLayout;
     QHBoxLayout *imageStretchYLayout;
+    QHBoxLayout *aspectRatioLayout;
     
     QLabel *XShiftLabel;
     QLabel *YShiftLabel;
     QDoubleSlider *XShiftEditSlider;
     QDoubleSlider *YShiftEditSlider;
+    QCheckBox *worldAspectRatioCheckBox;
     CustomLineEdit *XShiftEdit;
     CustomLineEdit *YShiftEdit;
     QLabel *worldWidthLabel;
     QLabel *worldHeightLabel;
+    QLabel *scalingAspectRatioLabel;
     QDoubleSlider *worldWidthEditSlider;
     QDoubleSlider *worldHeightEditSlider;
     CustomLineEdit *worldWidthEdit;
@@ -574,6 +578,11 @@ signals:
     
     //TODO for each change function, push current value onto the undostack...each action has its own command?
     void changeFunction(int index);
+    void aspectRatioLocked(bool checked);
+    void changingSliderWorldHeight(double val);
+    void changingSliderWorldWidth(double val);
+    void changingBoxWorldHeight(double val);
+    void changingBoxWorldWidth(double val);
     void changeWorldWidth(double val);
     void changeWorldWidth();
     void changeWorldHeight(double val);
@@ -620,9 +629,10 @@ signals:
     void showFunctionIcons() { functionIconsWindow->hide(), functionIconsWindow->show(); }
     void showOverflowColorPopUp() { setOverflowColorPopUp->show(); }
     
-    void addNewImageDataPoint(const ComplexValue &data) { *imageDataSeries << QPointF(data.real(), data.imag()); }
+    void addNewImageDataPoint(const ComplexValue &data) { *imageDataSeries << QPointF(data.real(), data.imag()); selectedPixelX.push_back(data.real()); selectedPixelY.push_back(data.imag());}
     void showImageDataGraph() { updateImageDataGraph(); imageDataWindow->hide(); imageDataWindow->show(); }
     void updateImageDataGraph();
+
 
     void startShifting(const QPoint &point);
     void updateShifting(const QPoint &point);
@@ -643,6 +653,12 @@ protected:
     // void mouseMoveEvent(QMouseEvent *event);
     
 private:
+
+    bool aspectRatioCheckLock = false;
+
+    std::vector<float> selectedPixelX;
+    std::vector<float> selectedPixelY;
+
     QString genLabel(const char * in);
     QString getCurrSettings(const HistoryItem &item);
     QString saveSettings(const QString &fileName, const int &actionFlag);

@@ -6,6 +6,7 @@
 #include <math.h>
 #include <complex>
 #include <time.h>
+#include <vector>
 
 #include <QObject>
 #include <QColor>
@@ -14,6 +15,7 @@
 
 #include "geomath.h"
 
+#define image_dim 300
 
 const unsigned int ICOS_FACES_SIZE = 20;
 const unsigned int ZONE_VECT_SIZE = 32;
@@ -32,13 +34,12 @@ public:
     
     ColorWheel* clone();
     
-    QColor getOverflowColor() { return overflowColor; }
-    
+    QColor getOverflowColor() { return overflowColor;}
+
 private:
     
     // FUNCTIONAL VARIABLES
-    int image_height;
-    int image_width;
+
     int currentSel;
     QImage image;
     QColor overflowColor;

@@ -7,8 +7,6 @@
         <file>Icons/zoomout.png</file>
         <file>function-previews/cm.png</file>
         <file>function-previews/cmm.png</file>
-        <file>function-previews/Hex3.png</file>
-        <file>function-previews/Hex6.png</file>
         <file>function-previews/p1.png</file>
         <file>function-previews/p2.png</file>
         <file>function-previews/p3m1.png</file>
@@ -20,12 +18,14 @@
         <file>function-previews/pm.png</file>
         <file>function-previews/pmg.png</file>
         <file>function-previews/pmm.png</file>
-        <file>function-previews/Original.png</file>
         <file>function-previews/p4g.png</file>
         <file>function-previews/pgg.png</file>
         <file>Icons/remove.svg</file>
         <file>Icons/plus.svg</file>
         <file>Icons/plus.png</file>
         <file>Icons/remove.png</file>
+        <file>function-previews/ComplexPoly.png</file>
+        <file>function-previews/p3.png</file>
+        <file>function-previews/p6.png</file>
     </qresource>
 </RCC>

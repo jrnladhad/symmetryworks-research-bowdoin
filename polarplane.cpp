@@ -162,6 +162,7 @@ PolarPlane::PolarPlane(AbstractFunction *currFunction, unsigned int *termIndex, 
 // show plane in new window
 void PolarPlane::showPlanePopUp(int flag)
 {
+    qDebug()<<"showPlanePopUp\n";
     switch(flag) {
         case LOCAL_FLAG:
             polarPlanePopUp->setWindowTitle(tr("Function Coefficient Pair"));
