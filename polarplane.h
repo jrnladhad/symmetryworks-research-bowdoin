@@ -49,7 +49,6 @@ protected:
     {
         if(event->button() == Qt::LeftButton)
         {
-            // qDebug() << "Clicked on: " << event->pos();
             coordinateSeries->replace(0, chart->mapToValue(event->pos(), coordinateSeries));
             mouseMoving = false;
         }
@@ -59,8 +58,6 @@ protected:
     {
         if(event->button() == Qt::LeftButton)
         {
-            // qDebug() << "Clicked on: " << event->pos();
-            // coordinateSeries->replace(0, chart->mapToValue(event->pos(), coordinateSeries));
             mouseMoving = true;
         }
         QChartView::mousePressEvent(event);
@@ -70,7 +67,6 @@ protected:
     {
         if(mouseMoving)
         {
-            // qDebug() << "Clicked on: " << event->pos();
             coordinateSeries->replace(0, chart->mapToValue(event->pos(), coordinateSeries));
             emit newCoordinate();
         }
@@ -115,7 +111,7 @@ private:
     QLabel *angleLabel;
     QLineEdit *radiusEdit;
     QLineEdit *angleEdit;
-    //sQPushButton *confirmButton;
+
     QPushButton *resetButton;
     QPushButton *cancelButton;
     QPushButton *zoomInButton;

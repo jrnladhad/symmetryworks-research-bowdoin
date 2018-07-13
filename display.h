@@ -24,8 +24,6 @@ public:
     void setPixel(int i, int j, QRgb color);
     QSize sizeHint() const { return disp.size(); }
     QImage *getImage() { return &disp; }
-//    void shrink();
-//    void enlarge();
     int getWidth() { return width;}
     int getHeight() { return height;}
     void resetSize() {resize(width, height); update();}
@@ -53,7 +51,6 @@ private:
     QPoint bottomRight;
 
     bool mouseMoving;
-    // QPoint prevMousePos;
 };
 
 

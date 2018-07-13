@@ -19,33 +19,16 @@ MainWindow::MainWindow()
     setCentralWidget(centerWidget);
     
     connect(this->currInterface, SIGNAL(imageActionStatus(bool)), this, SLOT(updateImageActionStatus(bool)));
-    
-    // QWidget *topFiller = new QWidget;
-    // topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    
-    // infoLabel = new QLabel(tr("<i>Choose a menu option, or right-click to "
-    //                           "invoke a context menu</i>"));
-    // infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-    // infoLabel->setAlignment(Qt::AlignCenter);
-    
-    // QWidget *bottomFiller = new QWidget;
-    // bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // undoStack = new QUndoStack(this);
-    
+
     createActions();
     createMenus();
     createDockWindows();
-    
-    
-    // QString message = tr("A context menu is available by right-clicking");
-    // statusBar()->showMessage(message);
-    
+
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
     int x = (screenGeometry.width()-this->width()) * SCREEN_WIDTH_MARGIN;
     int y = (screenGeometry.height()-this->height()) * SCREEN_HEIGHT_MARGIN;
     this->move(x, y);
-    
-    //resize(QDesktopWidget().availableGeometry(this).size() * 0.5);
+
     
     if (qFabs(screenGeometry.height() - this->height()) < SCREEN_INTERFACE_MARGIN){
         QFont font;
@@ -55,10 +38,7 @@ MainWindow::MainWindow()
     }
     
     setWindowTitle(tr("Wallpaper Generation"));
-    
-    //setFixedSize(sizeHint());
-    
-    
+
 }
 
 MainWindow::~MainWindow()
@@ -68,8 +48,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::createActions()
 {
-    
-    
     loadAct = new QAction(tr("Load Workspace..."), this);
     loadAct->setShortcuts(QKeySequence::Open);
     loadAct->setStatusTip(tr("Load an existing .wpr file"));
@@ -93,11 +71,6 @@ void MainWindow::createActions()
     redoAct->setStatusTip(tr("Redo the most current action"));
     redoAct->setShortcut(QKeySequence::Redo);
     connect(redoAct, SIGNAL(triggered()), currInterface, SLOT(handleRedo()));
-    
-    // printAct = new QAction(tr("&Print..."), this);
-    // printAct->setShortcuts(QKeySequence::Print);
-    // printAct->setStatusTip(tr("Print the document"));
-    // connect(printAct, &QAction::triggered, this, &MainWindow::print);
     
     exportImageAct = new QAction(tr("Export Image..."), this);
     exportImageAct->setShortcut(QKeySequence("Ctrl+E"));
@@ -126,8 +99,6 @@ void MainWindow::createActions()
     
     aboutAct = new QAction(tr("About wallgen"), this);
     connect(aboutAct, SIGNAL(triggered()), currInterface, SLOT(showInfo()));
-    
-    
 }
 
 void MainWindow::createMenus()
@@ -153,7 +124,6 @@ void MainWindow::createMenus()
     
     helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->addAction(aboutAct);
-    //helpMenu->addAction(aboutQtAct);
     
 }
 

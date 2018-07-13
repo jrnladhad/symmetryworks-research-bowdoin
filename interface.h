@@ -188,7 +188,6 @@ public:
         progBar->setRange(0, 100);
         progBar->setAlignment(Qt::AlignCenter);
         progBar->setValue(0);
-        // progBar->setVisible(false);
         progBar->setPalette(QColor(Qt::gray));
         this->setVisible(true);
         
@@ -281,8 +280,7 @@ signals:
 class ChangeCommand : public QUndoCommand
 {
 public:
-    
-    // ChangeCommand(QSpinBox *item, double oldVal, double newVal, QUndoCommand *parent = 0) : QUndoCommand(parent)
+
     ChangeCommand(QObject *item, double oldVal, double newVal, QUndoCommand *parent = 0) : QUndoCommand(parent)
     {
         if(oldVal == newVal) return;
@@ -301,17 +299,16 @@ public:
     ~ChangeCommand() {}
     
     void undo() Q_DECL_OVERRIDE {
-        // qDebug() << "size of undo stack" << undoStack->count();
         if(!canUndo){ qDebug() << "can't undo"; return; }
         qDebug() << "UNDO to" << oldVal;
         
         if (QSpinBox *boxItem = dynamic_cast<QSpinBox*>(item) ) {
             boxItem->setValue(oldVal);
-            // emit boxItem->returnPressed();
+
         }
         else if (QDoubleSpinBox *boxItem = dynamic_cast<QDoubleSpinBox*>(item)) {
             boxItem->setValue(oldVal);
-            // emit boxItem->returnPressed();
+
         }
         if (CustomLineEdit *lineEditItem = dynamic_cast<CustomLineEdit*>(item)) {
             
@@ -328,7 +325,7 @@ public:
         }
         
         canRedo = true;
-        //canUndo = true;
+
     }
     void redo() Q_DECL_OVERRIDE {
         if(!canRedo) return;
@@ -337,12 +334,12 @@ public:
         
         if (QSpinBox *boxItem = dynamic_cast<QSpinBox*>(item) ) {
             boxItem->setValue(newVal);
-            // emit boxItem->returnPressed();
+
         }
         else if (QDoubleSpinBox *boxItem = dynamic_cast<QDoubleSpinBox*>(item)) {
             
             boxItem->setValue(newVal);
-            // emit boxItem->returnPressed();
+
         }
         if (CustomLineEdit *lineEditItem = dynamic_cast<CustomLineEdit*>(item)) {
             lineEditItem->setText(QString::number(newVal));
@@ -563,11 +560,7 @@ public:
     
 signals:
     void imageActionStatus(bool status);
-    //    void undoEnabled();
-    //    void undoDisabled();
-    //    void redoEnabled();
-    //    void redoDisabled();
-    
+
     private slots:
     void updateCurrTerm(int i);
     void changeNumTerms(int i);
@@ -649,8 +642,6 @@ signals:
     
 protected:
     void mousePressEvent(QMouseEvent *event);
-    //void keyPressEvent(QKeyEvent *event);
-    // void mouseMoveEvent(QMouseEvent *event);
     
 private:
 

@@ -71,7 +71,6 @@ Interface::Interface(QWidget *parent) : QWidget(parent)
     snapshotFolderPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/Wallgen Snapshots";
     
     infoPopUp = new QMessageBox(this);
-//    infoPopUp->setIcon(QMessageBox::Information);
     infoPopUp->setText(tr("Wallgen Software Overview"));
     infoPopUp->setInformativeText(tr("Welcome to wallgen!"));
     infoPopUp->hide();
@@ -137,7 +136,6 @@ void Interface::initInterfaceLayout()
     errorMessageBox = new QMessageBox(this);
     errorMessageBox->setIcon(QMessageBox::Critical);
     errorMessageBox->addButton(QMessageBox::Close);
-    //connect(errorMessageBox, SIGNAL(accepted()), errorMessageBox, SLOT(accept()));
     
     // INPUT VALIDATORS (NUMERICAL)
     doubleValidate = new QDoubleValidator(-9999999.0, 9999999.0, 5, this);
@@ -161,8 +159,6 @@ void Interface::initInterfaceLayout()
     initImageProps();
     initImageExportPopUp();
     initToolTips();
-
-    // globalSnapshotFolder = QStandPaths::writableLocation(QStandPaths::DesktopLocation) + "/Wallgen Snapshots";
 }
 
 
@@ -179,7 +175,6 @@ void Interface::initPreviewDisplay()
     disp = new Display(previewSize, previewSize, displayWidget);
     snapshotButton= new QPushButton(tr("Snapshot"), this);
     dispLayout = new QVBoxLayout(displayWidget);
-    //dispLayout->setSizeConstraint(QLayout::SetMinimumSize);
     buttonLayout = new QHBoxLayout();
     buttonLayout->addWidget(snapshotButton);
     
@@ -244,7 +239,6 @@ void Interface::initFunctionConstants()
     nEdit->setSingleStep(FREQ_SPINBOX_STEP);
     mEdit->setRange(MIN_FREQ_VALUE, MAX_FREQ_VALUE);
     mEdit->setSingleStep(FREQ_SPINBOX_STEP);
-    // aEdit->setRange((-314, 314);
     aEdit->setRange((int)(-pi*100), (int)(pi*100));
     aEdit->setSingleStep(ANGLE_SPINBOX_STEP * 100);
     rEdit->setRange(0,(int)MAX_RADIUS * 100);
@@ -339,7 +333,6 @@ void Interface::initFunctionConstants()
                 functionTermsGrid->addWidget(numTermsLabel, r, 0, 1, 1, Qt::AlignCenter);
                 functionTermsGrid->addWidget(numTermsEdit, r, 1, 1, 1, Qt::AlignCenter);
                 functionTermsGrid->addWidget(termViewButton, 0, 2, 1, 1, Qt::AlignCenter);
-                // functionTermsGrid->setVerticalSpacing(20);
                 break;
             case 1:
                 functionTermsGrid->addWidget(line1, r, 0, 1, 10);
@@ -452,7 +445,6 @@ void Interface::initPatternType()
     setLoadedImage = new QPushButton(tr("Set/Change Image..."), patternTypeBox);
     fromImageButton = new QRadioButton(tr("Image"), patternTypeBox);
     fromColorWheelButton = new QRadioButton(tr("Color Wheel"), patternTypeBox);
-    // showImageDataGraphButton = new QPushButton(tr("Show Graph"), patternTypeBox);
     functionLabel = new QLabel(patternTypeBox);
     colorwheelLabel = new QLabel(patternTypeBox);
     imagePathLabel = new QLabel(patternTypeBox);
@@ -543,7 +535,6 @@ void Interface::initPatternType()
     
     //initialize overflow color window
     setOverflowColorPopUp = new QColorDialog();
-    // setOverflowColorButton = new QPushButton(tr("Set Overflow Color..."), patternTypeBox);
     
     //initialize image data window
     imageDataWindow = new QWidget(this, Qt::Window);
@@ -868,7 +859,6 @@ void Interface::connectAllSignals()
     connect(outWidthEdit, SIGNAL(returnPressed()), this, SLOT(changeOWidth()));
     connect(outHeightEdit, SIGNAL(returnPressed()), this, SLOT(changeOHeight()));
     connect(aspectRatioEdit, SIGNAL(returnPressed()), this, SLOT(changeAspectRatio()));
-    //connect(aspectRatioEdit, SIGNAL(editingFinished()), this, SLOT(changeAspectRatio()));
     
     connect(previewDisplayPort->getControllerObject(), SIGNAL(partialProgressChanged(double)), displayProgressBar, SLOT(partialUpdate(double)));
     connect(previewDisplayPort, SIGNAL(paintingFinished(bool)), this, SLOT(resetMainWindowButton(bool)));
@@ -952,8 +942,6 @@ void Interface::refreshTableTerms()
 void Interface::refreshMainWindowTerms()
 {
     
-    // qDebug() << "in refreshMainWindowTerms";
-    
     currTermEdit->blockSignals(true);
     numTermsEdit->blockSignals(true);
     
@@ -1007,15 +995,12 @@ void Interface::removeTerm(int row)
     removeTableTerm(row);
     
     unsigned int term = row;
-    //qDebug() << "removing term " << row << "from function";
     currFunction->removeTerm(term);
     numTerms = currFunction->getNumTerms();
     
     numTermsEdit->blockSignals(true);
     numTermsEdit->setValue(numTerms);
     numTermsEdit->blockSignals(false);
-    
-    // qDebug() << "num terms is now" << currFunction->getNumTerms() << "num terms" << numTerms;
     
     currTermEdit->blockSignals(true);
     currTermEdit->setMaximum(currFunction->getNumTerms());
@@ -1052,7 +1037,6 @@ void Interface::addTerm()
     unsigned int highestIndex = termViewTable->rowCount();
     termViewTable->setRowCount(highestIndex + 1);
     
-    //qDebug() << "highest index" << highestIndex;
     
     QSpinBox *nEditTable = new QSpinBox();
     QSpinBox *mEditTable = new QSpinBox();
@@ -1115,9 +1099,6 @@ void Interface::addTerm()
     termViewTableMapper->setMapping(rEditTable, (QObject*)new QPoint(highestIndex, 4));
     
     refreshMainWindowTerms();
-    // updatePreviewDisplay();
-    // addTermButton->blockSignals(false);
-    
 }
 
 
@@ -1130,18 +1111,9 @@ void Interface::resetFunction()
     currFunction->refresh();
     numTermsEdit->setValue(1);
     
-    // scaleREdit->setText(QString::number(currFunction->getScaleR()));
-    // scaleAEdit->setText(QString::number(currFunction->getScaleA()));
-    // scaleREditSlider->setValue(currFunction->getScaleR() * 100.0);
-    // scaleAEditSlider->setValue(currFunction->getScaleA() * 100.0);
-    
     changeScaleR(currFunction->getScaleR());
     changeScaleA(currFunction->getScaleA());
     
-    // changeWorldHeight(DEFAULT_WORLD_HEIGHT);
-    // changeWorldWidth(DEFAULT_WORLD_WIDTH);
-    // changeXCorner(DEFAULT_XCORNER);
-    // changeYCorner(DEFAULT_YCORNER);
     
     worldWidthEditSlider->setValue(DEFAULT_WORLD_HEIGHT * 100.0);
     worldHeightEditSlider->setValue(DEFAULT_WORLD_WIDTH * 100.0);
@@ -1179,10 +1151,7 @@ void Interface::updateCurrTerm(int i)
 
 // updates the number of terms of the current function
 void Interface::changeNumTerms(int i)
-{
-    
-    // qDebug() << "size of stack" << undoStack->count();
-    
+{   
     newUpdate = false;
     if (!numTermsEdit->hasFocus()) numTermsEdit->setFocus();
     
@@ -1203,9 +1172,7 @@ void Interface::changeNumTerms(int i)
     }
     
     createUndoAction(numTermsEdit, oldNumTerms, numTerms);
-    
-    //updateCurrTerm(i);
-    
+
     refreshMainWindowTerms();
     refreshTableTerms();
     newUpdate = true;
@@ -1216,10 +1183,6 @@ void Interface::changeNumTerms(int i)
 // handles changing to a new color wheel
 void Interface::colorWheelChanged(int /* unused */ )
 {
-    // if(index == 9)
-    //     setLoadedImage->show();
-    // else
-    //     setLoadedImage->hide();
     updatePreviewDisplay();
 }
 
@@ -1304,8 +1267,6 @@ void Interface::setImagePushed()
 // handles changing to a new function
 void Interface::changeFunction(int index)
 {
-    
-    //qDebug() << "change Function";
     newUpdate = false;
     
     termIndex = 0;
@@ -1319,6 +1280,7 @@ void Interface::changeFunction(int index)
     polarPlane->changeFunction(currFunction);
     previewDisplayPort->changeFunction(currFunction);
     imageExportPort->changeFunction(currFunction);
+
     aspectRatioPreviewDisplayPort->changeFunction(currFunction);
     
     refreshMainWindowTerms();
@@ -1343,7 +1305,7 @@ void Interface::saveCurrWorkspace()
     if (currFileName.isEmpty()) {
         return;
     }
-    // qDebug() << "saving";
+
     saveloadPath = saveSettings(currFileName, WORKSPACE_ACTION);
     
     QMessageBox msgBox;
@@ -1375,13 +1337,10 @@ void Interface::saveCurrWorkspaceAs()
 // internal function that handles saving settings
 QString Interface::saveSettings(const QString &fileName, const int &actionFlag) {
     
-    // QDir::setCurrent(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));
     if (actionFlag == SNAPSHOT_ACTION) {
         QDir::setCurrent(snapshotFolderPath);
     }
     QFile outFile(fileName);    
-
-    // qDebug() << QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/" + fileName;
 
     if (!outFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         return "";
@@ -1425,10 +1384,7 @@ QString Interface::saveSettings(const QString &fileName, const int &actionFlag) 
         << "M: " << QString::number(currFunction->getM(i)) << tabString
         << "R: " << QString::number(currFunction->getR(i)) << tabString
         << "A: " << QString::number(currFunction->getA(i)) << endl;
-        // out << currFunction->getN(i) << currFunction->getM(i) << currFunction->getR(i) << currFunction->getA(i);
     }
-    
-    // outFile.setPermissions(QFile::ReadOther);
     
     outFile.close();
     
@@ -1453,23 +1409,15 @@ void Interface::loadFromSettings()
 // internal function that handles loading settings from a specified file
 QString Interface::loadSettings(const QString &fileName) {
     
-    //qDebug() << "load" << fileName;
-//    QMessageBox msgBox;
-//    msgBox.setText(tr("Loading from: ").append(fileName));
-//    msgBox.exec();
-    
     QFile inFile(fileName);
     
     if (!inFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox msgBox;
         msgBox.setText(tr("ERROR LOADING FILE"));
         msgBox.exec();
-        // return "";
     } else {
         qDebug() << "SUCCEEDED LOADING FILE";
     }
-
-    // QDataStream in(&inFile);
     
     QTextStream in(&inFile);
     QString skipString;
@@ -1485,8 +1433,7 @@ QString Interface::loadSettings(const QString &fileName) {
     int tempint, newFunctionIndex, newColorIndex, count;
     double tempdouble;
     QColor overflowColor;
-    
-   // newColorIndex = 0;
+
     
     in.readLineInto(&line);
     settings->XCorner = (line.right(line.length() - line.lastIndexOf(" ") - 1)).toDouble();
@@ -1502,21 +1449,14 @@ QString Interface::loadSettings(const QString &fileName) {
     settings->OHeight = (line.right(line.length() - line.lastIndexOf(" ") - 1)).toInt();
     in.readLineInto(&line);
     functionType = (line.right(line.length() - line.lastIndexOf(" ") - 1));
-    
-    // if (functionType == "Wallpapers") {
-    // in >> skipString >> functionName;
+
     in.readLineInto(&line);
     functionName = (line.right(line.length() - line.lastIndexOf(" ") - 1));
     newFunctionIndex = functionSel->findText(functionName, Qt::MatchExactly);
-    // }
-    // else {
-    // 	// deal with differnt types of functions
-    // }
-    
+
     in.readLineInto(&line);
     colorType = (line.right(line.length() - line.lastIndexOf(" ") - 1));
-    
-    // in >> skipString >> colorType;
+
     if (colorType == "Image") {
         newColorIndex = -1;
         in.readLineInto(&line);
@@ -1536,7 +1476,6 @@ QString Interface::loadSettings(const QString &fileName) {
     
     in.readLineInto(&line);
     tempdouble = (line.right(line.length() - line.lastIndexOf(" ") - 1)).toDouble();
-   // qDebug() << "scale R: " << tempdouble;
     scaleREdit->blockSignals(true);
     currFunction->setScaleR(tempdouble);
     scaleREdit->setText(QString::number(tempdouble));
@@ -1554,7 +1493,6 @@ QString Interface::loadSettings(const QString &fileName) {
     
     currFunction->setNumTerms(count);
     unsigned int unsignedCount = count;
-    //currFunction->refresh();
     
     QString separator(PARAMETER_SEPARATOR_LENGTH, ' ');
     QStringList resultList;
@@ -1589,29 +1527,23 @@ QString Interface::loadSettings(const QString &fileName) {
     }
  
     inFile.close();
-    //qDebug() << scaleREdit->text();
-    
+
     worldWidthEditSlider->setValue(settings->Width * 100.0);
     worldHeightEditSlider->setValue(settings->Height * 100.0);
     XShiftEditSlider->setValue(settings->XCorner * 100.0);
     YShiftEditSlider->setValue(settings->YCorner * 100.0);
     
     if (functionSel->currentIndex() == newFunctionIndex) {
-        //qDebug() << scaleREdit->text();
        // changeFunction(newFunctionIndex);
         
     }
     else {
         functionSel->setCurrentIndex(newFunctionIndex);
-         //qDebug() << scaleREdit->text();
     }
-//
-   // qDebug() << currFunction->getScaleR();
     refreshMainWindowTerms();
     refreshTableTerms();
     
-    if (newColorIndex == -1) {
-     //   qDebug() << "no color wheel: image";
+    if (newColorIndex == -1) {;
         imageSetPath = imageLoadPath;
         openImageName = loadImageName;
         currColorWheel->changeOverflowColor(overflowColor);
@@ -1644,8 +1576,6 @@ void Interface::updatePreviewDisplay()
         return;
     }
 
-   // qDebug() << "updates";
-    
     imageDataSeries->clear();
     
     snapshotButton->setEnabled(false);
@@ -1656,7 +1586,16 @@ void Interface::updatePreviewDisplay()
     
 }
 
-// slot function called when clicked "update preview" button to add to history and update the preview display to reflect current settings
+/*
+***********************************
+
+            SLOT FUNCTIONS
+
+***********************************
+*/
+
+
+//Called when clicked "update preview" button to add to history and update the preview display to reflect current settings
 void Interface::snapshotFunction()
 {
     historyDisplay->show();
@@ -1666,16 +1605,13 @@ void Interface::snapshotFunction()
     QString filePath = saveSettings(newFile, SNAPSHOT_ACTION).append("/" + newFile);
     
     qDebug() << "save" << filePath;
-//    QMessageBox msgBox;
-//    msgBox.setText(tr("Saving from: ").append(filePath));
-//    msgBox.exec();
     
     historyDisplay->triggerAddToHistory(savedTime, filePath, currFunction, currColorWheel, settings);
     
     
 }
 
-// SLOT FUNCTIONS TO CHANGE OUTPUT IMAGE PROPERTIES
+//CHANGE OUTPUT IMAGE PROPERTIES
 void Interface::changeOHeight()
 {
     heightChanged = true;
@@ -1724,7 +1660,6 @@ void Interface::updateAspectRatio()
    
     double width = outWidthEdit->text().toInt() * ASPECT_RATIO_SCALE;
     double height = outHeightEdit->text().toInt() * ASPECT_RATIO_SCALE;
-   // qDebug() << "width: " << width << "height: " << height;
     
     double temp = (double)(width / height);
     
@@ -1735,7 +1670,6 @@ void Interface::updateAspectRatio()
         
         QSize size = aspectRatioPreview->changeDisplayDimensions(width, height);
         aspectRatioPreviewDisplayPort->changeDimensions(size.width(), size.height());
-        //aspectRatioPreviewDisplayPort->changeSettings(settings);
         
         aspectRatioEdit->setText(QString::number(aspectRatio));
         aspectRatioPreviewDisplayPort->paintToDisplay(aspectRatioPreview);
@@ -1946,7 +1880,6 @@ void Interface::changeScaleA(double val)
     currFunction->setScaleA(val);
     scaleAEdit->setText(QString::number(val));
     scaleAEdit->setModified(false);
-    // createUndoAction(scaleAEditSlider, scaleAEditSlider->value() / 100.0, val);
     updatePreviewDisplay();
 }
 
@@ -1973,7 +1906,6 @@ void Interface::changeScaleR(double val)
     currFunction->setScaleR(val);
     scaleREdit->setText(QString::number(val));
     scaleREdit->setModified(false);
-    // createUndoAction(scaleREditSlider, scaleREditSlider->value() / 100.0, val);
     updatePreviewDisplay();
 }
 
@@ -1994,7 +1926,7 @@ void Interface::changeScaleR()
 }
 
 
-// SLOT FUNCTIONS TO CHANGE FREQ AND COEFF PAIRS
+//CHANGE FREQ AND COEFF PAIRS
 void Interface::changeN(int val)
 {
     
@@ -2003,7 +1935,6 @@ void Interface::changeN(int val)
     createUndoAction(nEdit, oldN, val);
     
     refreshTableTerms();
-    // refreshMainWindowTerms();
     updatePreviewDisplay();
     
     oldN = val;
@@ -2017,7 +1948,6 @@ void Interface::changeM(int val)
     createUndoAction(mEdit, oldM, val);
 
     refreshTableTerms();
-    // refreshMainWindowTerms();
     updatePreviewDisplay();
     
     oldM = val;
@@ -2031,7 +1961,6 @@ void Interface::changeR(double val)
     rValueLabel->setText(QString::number(val));
     
     refreshTableTerms();
-    // refreshMainWindowTerms();
     updatePreviewDisplay();
 }
 
@@ -2042,7 +1971,6 @@ void Interface::changeA(double val)
     aValueLabel->setText(QString::number(val));
     
     refreshTableTerms();
-    // refreshMainWindowTerms();
     updatePreviewDisplay();
 }
 
@@ -2096,7 +2024,6 @@ void Interface::errorHandler(const int &flag)
             }
             errorMessageBox->setText("Error: image dimensions must be between 20 and 9999");
             qDebug() << errorMessageBox->exec();
-            //errPrint = true;
             break;
         case INVALID_ASPECT_RATIO:
             if (errPrint) {
@@ -2120,19 +2047,15 @@ void Interface::setPolarCoordinates(int coeffFlag, const QString &radius, const 
     {
         rEdit->setValue(radius.toDouble() * 100);
         aEdit->setValue(angle.toDouble() * 100);
-//        rValueLabel->setText(radius);
-//        aValueLabel->setText(angle);
     }
     else if (coeffFlag == GLOBAL_FLAG)
     {
         newUpdate = false;
         scaleREdit->setText(radius);
         emit scaleREdit->returnPressed();
-        // scaleREditSlider->setValue(radius.toDouble() * 100.0);
         newUpdate = true;
         scaleAEdit->setText(angle);
         emit scaleAEdit->returnPressed();
-        // scaleAEditSlider->setValue(angle.toDouble() * 100.0);
     }
     
 }
@@ -2220,7 +2143,6 @@ void Interface::addTermTable()
     currFunction->setNumTerms(newNumTerms);
     numTermsEdit->setValue(newNumTerms);
     
-    //undoStack->push(new ChangeCommand(numTermsEdit, currFunction->getNumTerms(), newNumTerms));
 }
 
 // pop up window to appear when image file has finished exporting
@@ -2312,36 +2234,9 @@ void Interface::updateShifting(const QPoint &point)
 
 void Interface::updateImageDataGraph()
 {
-    QRgb value;
     QImage original(imageSetPath + "/" + openImageName);
     original.load(imageSetPath + "/" + openImageName);
     original = QImage(original.width(), original.height() , QImage::Format_ARGB32);
-    for(int i=0; i<original.height(); i++){
-        QRgb *line = (QRgb *)original.scanLine(i);
-        for(int j=0; j<original.width(); j++){
-            QRgb pixelData = line[j];
-            unsigned int red = qRed(pixelData);
-            unsigned int green = qGreen(pixelData);
-            unsigned int blue = qBlue(pixelData);
-            value = qRgba(red, green, blue, 127);
-            original.setPixel(j,i, value);
-        }
-    }
-    float numberOfPixels = selectedPixelX.size();
-    qDebug()<<"number of pixels:"<<numberOfPixels<<"\n";
-    for(float i= 0; i< numberOfPixels; i++){
-        float pixelXCoord = selectedPixelX[i]+(original.width()/2);
-        float pixelYCoord = selectedPixelY[i] + (original.height()/2);
-        qDebug()<<"X:"<<pixelXCoord<<"Y:"<<pixelYCoord<<"\n";
-        QRgb pixelData = original.pixel(pixelXCoord, pixelYCoord);
-        unsigned int red = qRed(pixelData);
-        unsigned int green = qGreen(pixelData);
-        unsigned int blue = qBlue(pixelData);
-        //qDebug()<<"red:"<<red<<"blue:"<<blue<<"green:"<<green<<"\n";
-        value = qRgba(red, green, blue, 256);
-        original.setPixel(pixelXCoord,pixelYCoord, value);
-    }
-
     imagePixmap.convertFromImage(original);
     imagePixmap = imagePixmap.scaledToHeight(previewSize);
     imageLabel->setPixmap(imagePixmap);
@@ -2350,31 +2245,19 @@ void Interface::updateImageDataGraph()
 
 void Interface::handleUndo()
 {
-    
-   // if(!undoStack->canUndo()) { return; }
-    
-    // qDebug() << "in Undo";
-
     newAction = false;
     polarPlane->hidePolarPlane();
     undoStack->undo();
     newAction = true;
-    //emit redoEnabled();
-    //qDebug() << "undo stack size" << undoStack->count();
-    
-    // item->setValue(undoVal);
-    
 }
 
 void Interface::handleRedo()
 {
-    //if(!undoStack->canRedo()) { return; }
     newAction = false;
     qDebug() << "starting redo";
     polarPlane->hidePolarPlane();
     undoStack->redo();
     newAction = true;
-    // item->setValue(redoVal);
 }
 
 void Interface::createUndoAction(QObject *item, double oldVal, double newVal)
@@ -2389,21 +2272,15 @@ void Interface::createUndoAction(QObject *item, double oldVal, double newVal)
 
 bool Interface::eventFilter(QObject* object, QEvent* event)
 {
-    // qDebug() << "FILTER" << object->metaObject()->className();
-    
     if(event->type() == QEvent::KeyPress)
     {
-       // qDebug() << event->type();
-        
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         QKeySequence keySequence(keyEvent->key() | keyEvent->modifiers());
         
         if(keySequence.matches(QKeySequence::Undo)) {
-            // qDebug() << "here2";
             handleUndo();
             return true;
         } else if (keySequence.matches(QKeySequence::Redo)) {
-            // qDebug() << "here";
             handleRedo();
             return true;
         }
@@ -2412,7 +2289,6 @@ bool Interface::eventFilter(QObject* object, QEvent* event)
     }
     else
     {
-        
         return QObject::eventFilter(object,event);
     }
 }

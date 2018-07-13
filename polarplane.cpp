@@ -111,9 +111,6 @@ PolarPlane::PolarPlane(AbstractFunction *currFunction, unsigned int *termIndex, 
     graphDisplay->setRenderHint(QPainter::Antialiasing);
     
     graph->legend()->hide();
-    //graph->setTitle("PLANE FOR COEFFICIENT PAIR");
-    
-    // coeffPlanePopUpLayout->setFixedSize(600,600);
     
     radiusLabel->setFixedWidth(200);
     radiusEdit->setFixedWidth(200);
@@ -129,7 +126,6 @@ PolarPlane::PolarPlane(AbstractFunction *currFunction, unsigned int *termIndex, 
     polarCoordinatesLayout->addWidget(angleEdit);
     polarCoordinatesLayout->addItem(planeSpacer1);
     polarCoordinatesLayout->addLayout(actionButtonLayout);
-    // polarCoordinatesLayout->addWidget(cancelButton);
     polarCoordinatesLayout->addStretch(0);
     polarCoordinatesLayout->setSizeConstraint(QLayout::SetFixedSize);
     
@@ -149,8 +145,6 @@ PolarPlane::PolarPlane(AbstractFunction *currFunction, unsigned int *termIndex, 
     connect(radiusEdit, SIGNAL(returnPressed()), this, SLOT(updatePolarCoordinates()));
     connect(angleEdit, SIGNAL(returnPressed()), this, SLOT(updatePolarCoordinates()));
     connect(coordinateSeries, SIGNAL(pointReplaced(int)), this, SLOT(updatePolarCoordinatesWithIndex(int)));
-    //connect(confirmButton, SIGNAL(clicked()), this, SLOT(hidePolarPlane()));
-    // connect(cancelButton, SIGNAL(clicked()), this, SLOT(hidePolarPlane()));
     connect(resetButton, SIGNAL(clicked()), this, SLOT(resetPolarCoordinates()));
     connect(zoomInButton, SIGNAL(clicked()), this, SLOT(polarPlaneZoomIn()));
     connect(zoomOutButton, SIGNAL(clicked()), this, SLOT(polarPlaneZoomOut()));
@@ -195,7 +189,6 @@ void PolarPlane::showPlanePopUp(int flag)
     QPointF point(tempR * cos(tempA), tempR * sin(tempA));
     
     coordinateSeries->replace(0, point);
-//    updatePolarCoordinates(QPointF(tempR * cos(tempA), tempR * sin(tempA)));
     polarPlanePopUp->show();
     
     showActionFlag = false;

@@ -1,3 +1,7 @@
+/*
+ * This file contains the threading for rendering the image and displaying it to the preview display and exporting the image.
+*/
+
 #include "renderthread.h"
 
 RenderThread::RenderThread(AbstractFunction *function, ColorWheel *colorwheel, Settings *settings, QSize outputSize, QObject *parent) : QThread(parent)
@@ -36,7 +40,6 @@ void RenderThread::render(QPoint topLeft, QPoint bottomRight, QWaitCondition *co
     
     bottomRightXValue = bottomRight.x();
     bottomRightYValue = bottomRight.y();
-    //qDebug()<<"bottomRightXValue:"<<bottomRightXValue<<"bottomRightYValue:"<<bottomRightYValue<<"\n";
     this->controllerCondition = controllerCondition;
     worldYStart1 = currSettings->Height + currSettings->YCorner;
     worldYStart2 = currSettings->Height/overallHeight;
@@ -79,7 +82,9 @@ void RenderThread::run()
         
         for (int x = 0; x < outputWidth; x++)
         {
-            if (restart) { /* qDebug() << "renderThread aborts" ; */ break; }
+            if (restart) {
+                break;
+            }
             if (abort) return;
             
             for (int y = 0; y < outputHeight; y++)
@@ -90,8 +95,7 @@ void RenderThread::run()
                 worldX = (x + translated) * worldXStart + XCorner;
                 worldY = worldYStart1 - y * worldYStart2;
                 
-                //run the point through our mathematical function
-                //...then convert that complex output to a color according to our color wheel
+                //Run the point through our mathematical function and then convert that complex output to a color according to our colorwheel.
                 
                 fout = (*currFunction)(worldX,worldY);
                 QRgb color = (*currColorWheel)(fout);
@@ -100,7 +104,8 @@ void RenderThread::run()
                     emit newImageDataPoint(fout);
                 }
                 
-                // now, push the determined color to the corresponding point on the display
+                //Pushing the determined color to the corresponding point on the display
+
                 colorMap[x][y] = color;
             }
             
@@ -108,8 +113,6 @@ void RenderThread::run()
                 emit newProgress((x/outputWidth) * 100);
             }
         }
-
-        // qDebug() << currentThreadId() << "FINISHES RENDERING";
         
         mutex.lock();
         if (!restart) {
@@ -117,7 +120,6 @@ void RenderThread::run()
 
             condition.wait(&mutex);
         }
-        // qDebug() << "thread" << QThread::currentThread() << "wakes up from restarting";
         restart = false;
         mutex.unlock();        
     }   

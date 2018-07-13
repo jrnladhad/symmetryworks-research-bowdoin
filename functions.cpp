@@ -1,3 +1,8 @@
+/*
+ * This file contains all the functions of that calculate the coordinate of the pixel.
+ * The functions return a complex number that is calculated using Dr. Frank Farris's formulas.
+*/
+
 #include "functions.h"
 
 AbstractFunction::AbstractFunction(QVector<coeffpair> &in_coeffs, QVector<freqpair> &in_freqs)
@@ -225,7 +230,6 @@ std::complex<double> hex3Function::operator ()(double i, double j)
     }
     
     ans *= scale.combined();
-    //qDebug()<<"ansX:"<<ans.real()<<"ansY:"<<ans.imag()<<"\n";
     return ans;
 }
 
@@ -315,7 +319,7 @@ std::complex<double> hex6Function::operator ()(double i, double j)
     return ans;
 }
 
-///////////////////////////
+////////////////////////////////////////////////////////////
 
 std::complex<double> p6mFunction::bundle(double &x, double &y, unsigned int &i) const
 {
@@ -500,7 +504,9 @@ std::complex<double> pmgpgFunction::bundle(double &x, double &y, unsigned int &i
     part4 *=nega;
     return (part1-part2+ (part3)-(part4))/ 4.0;
 }
+
 //Note: as a hack, I made part2 and part4 positive to create a pmg fcn.Changed back9/9/13
+
 std::complex<double> pmgpgFunction::operator ()(double i, double j)
 {
     std::complex<double> ans(0,0);
@@ -516,6 +522,7 @@ std::complex<double> pmgpgFunction::operator ()(double i, double j)
 }
 
 ////////////////////////////////////////////////////////////
+
 //Note: Original rhombic function had no mirrors turned on. This is now a cm function. And I've switched to vertical stripes
 
 std::complex<double> rhombicFunction::bundle(double &x, double &y, unsigned int &i) const

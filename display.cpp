@@ -1,3 +1,7 @@
+/*
+ * This file contains the different functions related to the function previews.
+*/
+
 #include "display.h"
 
 Display::Display(double imageWidth, double imageHeight, QWidget *parent) :
@@ -13,37 +17,8 @@ Display::Display(double imageWidth, double imageHeight, QWidget *parent) :
 
 void Display::setPixel(int i, int j, QRgb color)
 {
-    // disp.setPixel(i, j, color);
     colorMap[i][j] = color;
 }
-
-//void Display::shrink() 
-//{
-//    int newSize = disp.width();
-//    if (disp.width() * (1 - SCREEN_SCALING_FACTOR) >= MIN_PREVIEW_IMAGE_SIZE) {
-//        newSize = (int)(newSize * (1 - SCREEN_SCALING_FACTOR));
-//    }
-//    else {
-//        newSize = MIN_PREVIEW_IMAGE_SIZE;
-//    }
-// 
-//    disp = disp.scaled(newSize, newSize, Qt::KeepAspectRatio);
-//    update();
-//}
-//
-//void Display::enlarge()
-//{
-//    int newSize = disp.width();
-//    if (disp.width() * (1 + SCREEN_SCALING_FACTOR) <= MAX_PREVIEW_IMAGE_SIZE) {
-//        newSize = (int)(newSize * (1 + SCREEN_SCALING_FACTOR));
-//    }
-//    else {
-//        newSize = MAX_PREVIEW_IMAGE_SIZE;
-//    }
-//   
-//    disp = disp.scaled(newSize, newSize, Qt::KeepAspectRatio);
-//    update();
-//}
 
 void Display::mousePressEvent(QMouseEvent *event) 
 {
@@ -82,7 +57,7 @@ QSize Display::changeDisplayDimensions(double width, double height) {
 
 }
 
-void Display::paintEvent(QPaintEvent * /* unused */)
+void Display::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     QColor color;

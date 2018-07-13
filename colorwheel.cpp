@@ -1,3 +1,8 @@
+/*
+ * This file contains all the different colorwheels.
+ * All colorwheel functions receive a complex number from renderthread.cpp and returns the specific color at that pixel.
+*/
+
 #include "colorwheel.h"
 
 ColorWheel::ColorWheel(QObject *parent) :
@@ -519,8 +524,9 @@ QRgb ColorWheel::FromImage(std::complex<double> zin)
     double y = zin.imag();
     QColor color;
     
-    if(x >= -2.0 && x < 2.0 && y >= -2.0 && y < 2.0)      //our image is defined within the Cartesian coordinates
-    {                                                       // -2 <= x <= 2  and -2 <= y <= 2
+    //Our image is defined within the Cartesian coordinated -2 <= x,y <=2
+    if(x >= -2.0 && x < 2.0 && y >= -2.0 && y < 2.0)
+    {
         int translated_x = (int) ((x + 2.0) * (image_dim / 4.0));
         int translated_y = (int) image_dim - ((y + 2.0) * (image_dim / 4.0));
         color = image.pixel(translated_x, translated_y);

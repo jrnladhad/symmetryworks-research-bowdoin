@@ -11,9 +11,14 @@
 #include "geomath.h"
 #include "display.h"
 
-class AbstractFunction      //this is the base class for all other classes that follow in this file;
-{                           //it defines many of the member functions that we needed for all of the
-public:                   //derived classes
+/*
+  This is the base class for all outher classes that follow in this file;
+  It defines many of the member functions that we need for all of the derived classes.
+*/
+
+class AbstractFunction
+{
+public:
     
     //CONSTRUCTORS
     AbstractFunction() { terms = 1; refresh(); }
@@ -65,10 +70,6 @@ protected:
 
 #define Kgen 1.6
 #define Lgen 1
-// hoping for top/bottom matches in fabric
-
-//#define Xgen ( 2*pi*x ) original defaults
-//#define Ygen ( 2*pi*(x/Kgen + y/Lgen) )
 
 #define Xgen ( 2*pi*x+2*pi*y/q3 ) //for hex lattice without rotation
 #define Ygen ( 4*pi*y/q3 )
@@ -83,7 +84,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new generalFunction(*this); };
+    virtual AbstractFunction* clone() const { return new generalFunction(*this); }
     
 };
 
@@ -91,9 +92,6 @@ public:
 
 #define Kgen2 1.6
 #define Lgen2 1.0
-
-//#define Xgen2 ( 2*pi*x ) original defaults
-//#define Ygen2 ( 2*pi*(x/Kgen2 + y/Lgen2) )
 
 #define Xgen2 ( 2*pi*x+2*pi*y/q3 )
 #define Ygen2 ( 4*pi*y/q3 )
@@ -108,14 +106,14 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new generalpairedFunction(*this); };
+    virtual AbstractFunction* clone() const { return new generalpairedFunction(*this); }
 };
 
 ////////////////////////////////////////////////////////////////
 
 
-#define Xhex3 (4*pi*x+4*pi*y/q3)
-#define Yhex3 (8*pi*y/q3)
+#define Xhex3 (2*pi*x+2*pi*y/q3)
+#define Yhex3 (4*pi*y/q3)
 
 class hex3Function : public AbstractFunction
 {
@@ -127,7 +125,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new hex3Function(*this); };
+    virtual AbstractFunction* clone() const { return new hex3Function(*this); }
     
     
 };
@@ -145,7 +143,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new p31mFunction(*this); };
+    virtual AbstractFunction* clone() const { return new p31mFunction(*this); }
     
     
 };
@@ -163,7 +161,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new p3m1Function(*this); };
+    virtual AbstractFunction* clone() const { return new p3m1Function(*this); }
     
 };
 
@@ -182,7 +180,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new hex6Function(*this); };
+    virtual AbstractFunction* clone() const { return new hex6Function(*this); }
     
     
 };
@@ -199,7 +197,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new p6mFunction(*this); };
+    virtual AbstractFunction* clone() const { return new p6mFunction(*this); }
     
     
 };
@@ -212,7 +210,7 @@ public:
 #define Xrect ( (2*pi*x) / Krect)
 #define Yrect ( (2*pi*y) / Lrect)
 
-///////////////////////////
+////////////////////////////////////////////////////////////////
 class pmFunction : public AbstractFunction
 {
 public:
@@ -223,9 +221,9 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new pmFunction(*this); };
+    virtual AbstractFunction* clone() const { return new pmFunction(*this); }
 };
-///////////////////////////
+////////////////////////////////////////////////////////////////
 class pmmFunction : public AbstractFunction
 {
 public:
@@ -236,10 +234,10 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new pmmFunction(*this); };
+    virtual AbstractFunction* clone() const { return new pmmFunction(*this); }
 };
 
-///////////////////////////
+////////////////////////////////////////////////////////////////
 class pggFunction : public AbstractFunction
 {
 public:
@@ -250,9 +248,9 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new pggFunction(*this); };
+    virtual AbstractFunction* clone() const { return new pggFunction(*this); }
 };
-///////////////////////////
+////////////////////////////////////////////////////////////////
 class pmgFunction : public AbstractFunction
 {
 public:
@@ -263,9 +261,9 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new pmgFunction(*this); };
+    virtual AbstractFunction* clone() const { return new pmgFunction(*this); }
 };
-///////////////////////////
+////////////////////////////////////////////////////////////////
 class pgFunction : public AbstractFunction
 {
 public:
@@ -276,7 +274,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new pgFunction(*this); };
+    virtual AbstractFunction* clone() const { return new pgFunction(*this); }
 };
 ////////////////////////////////////////////////////////////////
 class pmgpgFunction : public AbstractFunction
@@ -289,7 +287,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new pmgpgFunction(*this); };
+    virtual AbstractFunction* clone() const { return new pmgpgFunction(*this); }
 };
 
 ////////////////////////////////////////////////////////////////
@@ -300,6 +298,7 @@ public:
 #define Yrect2 ( (2*pi*y) / Lrect2)
 
 ////////////////////////////////////////////////////////////////
+
 //Note: Switched x and y to make vertical stripes 7/31/15
 
 #define Krhombic 0.4
@@ -318,7 +317,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new rhombicFunction(*this); };
+    virtual AbstractFunction* clone() const { return new rhombicFunction(*this); }
     
     
 };
@@ -342,7 +341,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new cmmFunction(*this); };
+    virtual AbstractFunction* clone() const { return new cmmFunction(*this); }
     
 };
 
@@ -361,11 +360,11 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new squareFunction(*this); };
+    virtual AbstractFunction* clone() const { return new squareFunction(*this); }
     
     
 };
-/////////////////////////////////
+
 ////////////////////////////////////////////////////////////////
 class p4mFunction : public AbstractFunction
 {
@@ -377,9 +376,8 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new p4mFunction(*this); };
-    
-    
+    virtual AbstractFunction* clone() const { return new p4mFunction(*this); }
+      
 };
 
 ////////////////////////////////////////////////////////////////
@@ -393,7 +391,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new p4gFunction(*this); };
+    virtual AbstractFunction* clone() const { return new p4gFunction(*this); }
     
     
 };
@@ -410,7 +408,7 @@ public:
     std::complex<double> bundle(double &x, double &y, unsigned int &i) const;
     std::complex<double> operator() (double i, double j);
     
-    virtual AbstractFunction* clone() const { return new zzbarFunction(*this); };
+    virtual AbstractFunction* clone() const { return new zzbarFunction(*this); }
     
 };
 

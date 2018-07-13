@@ -14,7 +14,6 @@ HistoryDisplay::HistoryDisplay(QObject *parent) : QObject(parent)
 {
     
     // create layout elements
-    
     viewHistoryWidget = new QWidget(static_cast<QWidget *>(parent), Qt::Drawer);
     viewHistoryWidget->setWindowTitle(tr("Saved Snapshots"));
     
@@ -144,10 +143,7 @@ void HistoryDisplay::removePreview(QObject *item)
     
     QFile::remove(historyItemToRemove->filePathName);
     
-    //delete historyItemToRemove;
-    
     if (historyItemsMap.empty()) {
-        // this->hide();
         clearHistoryButton->setEnabled(false);
         noItemLabel->show();
         viewHistoryBox->hide();

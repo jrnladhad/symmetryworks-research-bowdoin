@@ -26,27 +26,19 @@ public:
 
     void close() {currInterface->closing();}
     
-protected:
-    // #ifndef QT_NO_CONTEXTMENU
-    //     void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
-    // #endif // QT_NO_CONTEXTMENU
-    //void keyPressEvent(QKeyEvent *event);
-    
 private:
     void createActions();
     void createMenus();
     void createDockWindows();
     
     QDockWidget *rightDock;
-    // QDockWidget *leftDock;
     
     QMenu *fileMenu;
     QMenu *editMenu;
-    //QMenu *viewMenu;
     QMenu *advancedMenu;
     QMenu *helpMenu;
+
     QActionGroup *alignmentGroup;
-    // QAction *newAct;
     QAction *loadAct;
     QAction *saveAct;
     QAction *saveAsAct;
