@@ -36,6 +36,9 @@ public:
     
     QColor getOverflowColor() { return overflowColor;}
 
+    int getImageWidth() {return imageWidth;}
+    int getimageHeight() {return imageHeight;}
+
 private:
     
     // FUNCTIONAL VARIABLES
@@ -43,6 +46,7 @@ private:
     int currentSel;
     QImage image;
     QColor overflowColor;
+    int imageWidth, imageHeight;
     
     // COLOR WHEEL FUNCTIONS
     QRgb IcosColor(std::complex<double> zin);

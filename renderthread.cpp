@@ -69,7 +69,7 @@ void RenderThread::run()
         double outputWidth = bottomRightXValue - topLeftXValue;
         double outputHeight = bottomRightYValue - topLeftYValue;
 
-        int translated = bottomRightXValue;
+        int translated = topLeftXValue;
 
         ColorWheel selectedPixel;
         std::complex<double> fout;

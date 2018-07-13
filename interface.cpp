@@ -2236,6 +2236,7 @@ void Interface::updateImageDataGraph()
 {
     QImage original(imageSetPath + "/" + openImageName);
     original.load(imageSetPath + "/" + openImageName);
+    qDebug()<<"Width:"<<original.width()<<"Height:"<<original.height()<<"\n";
     original = QImage(original.width(), original.height() , QImage::Format_ARGB32);
     imagePixmap.convertFromImage(original);
     imagePixmap = imagePixmap.scaledToHeight(previewSize);
