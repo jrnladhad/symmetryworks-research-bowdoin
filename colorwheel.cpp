@@ -87,10 +87,9 @@ QRgb ColorWheel::operator() (std::complex<double> zin)
 void ColorWheel::loadImage(QString filename)
 {
     QImage raw(filename);
-    //qDebug()<<"Width:"<<raw.width()<<"Height:"<<raw.height()<<"\n";
     imageWidth = raw.width();
     imageHeight = raw.height();
-    image = raw.scaled(imageWidth, imageHeight, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+    image = raw.scaled(imageWidth + 1, imageHeight + 1, Qt::IgnoreAspectRatio, Qt::FastTransformation);
 }
 
 QRgb ColorWheel::IcosColor(std::complex<double> zin)

@@ -606,8 +606,8 @@ void Interface::initImageProps()
     imageShiftXLayout = new QHBoxLayout();
     imageShiftYLayout = new QHBoxLayout();
     
-    XShiftLabel = new QLabel(tr("Horizontal Shift"), imagePropsBox);
-    YShiftLabel = new QLabel(tr("Vertical Shift"), imagePropsBox);
+    XShiftLabel = new QLabel(tr("Lower Left X Corner"), imagePropsBox);
+    YShiftLabel = new QLabel(tr("Lower Left Y Corner"), imagePropsBox);
     XShiftEditSlider = new QDoubleSlider(imagePropsBox);
     YShiftEditSlider = new QDoubleSlider(imagePropsBox);
     XShiftEdit = new CustomLineEdit(imagePropsBox);
@@ -631,8 +631,8 @@ void Interface::initImageProps()
     imageStretchYLayout = new QHBoxLayout();
     aspectRatioLayout = new QHBoxLayout();
     
-    worldWidthLabel = new QLabel(tr("Horizontal Scaling"), imagePropsBox);
-    worldHeightLabel = new QLabel(tr("Vertical Scaling"), imagePropsBox);
+    worldWidthLabel = new QLabel(tr("Horizontal Width"), imagePropsBox);
+    worldHeightLabel = new QLabel(tr("Vertical Height"), imagePropsBox);
     scalingAspectRatioLabel = new QLabel(tr("Lock Aspect Ratio"), imagePropsBox);
     
     worldWidthEditSlider = new QDoubleSlider(imagePropsBox);
