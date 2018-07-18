@@ -89,7 +89,7 @@ void ColorWheel::loadImage(QString filename)
     QImage raw(filename);
     imageWidth = raw.width();
     imageHeight = raw.height();
-    image = raw.scaled(imageWidth + 1, imageHeight + 1, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+    image = raw.scaled(imageWidth, imageHeight, Qt::IgnoreAspectRatio, Qt::FastTransformation);
 }
 
 QRgb ColorWheel::IcosColor(std::complex<double> zin)
@@ -529,8 +529,8 @@ QRgb ColorWheel::FromImage(std::complex<double> zin)
     //Our image is defined within the Cartesian coordinated -2 <= x,y <=2
     if(x >= -2.0 && x < 2.0 && y >= -2.0 && y < 2.0)
     {
-        int translated_x = (int) ((x + 2.0) * (imageWidth / 4.0));
-        int translated_y = (int) imageHeight - ((y + 2.0) * (imageHeight / 4.0));
+        int translated_x = (int) ((x + 2.0) * ((imageWidth-1) / 4.0));
+        int translated_y = (int) (imageHeight - 1) - ((y + 2.0) * ((imageHeight - 1) / 4.0));
         color = image.pixel(translated_x, translated_y);
     }
     else {
