@@ -79,7 +79,13 @@ QRgb ColorWheel::operator() (std::complex<double> zin)
 void ColorWheel::loadImage(QString filename)
 {
     QImage raw(filename);
+<<<<<<< HEAD
     image = raw.scaled(image_dim, image_dim, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+=======
+    imageWidth = raw.width();
+    imageHeight = raw.height();
+    image = raw.scaled(imageWidth, imageHeight, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
 }
 
 QRgb ColorWheel::ImageSquish(std::complex<double> zin)
@@ -108,8 +114,13 @@ QRgb ColorWheel::ImageSquish(std::complex<double> zin)
         //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
         zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
         int translated_x = (int) ((x + 2.0) * ((image_dim - 1) / 4.0));
         int translated_y = (int) (image_dim - 1) - ((y + 2.0) * ((image_dim - 1) / 4.0));
+=======
+        int translated_x = (int) ((x + 2.0) * ((imageWidth - 1) / 4.0));
+        int translated_y = (int) (imageHeight - 1) - ((y + 2.0) * ((imageHeight-1) / 4.0));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
 
         color = image.pixel(translated_x, translated_y);
     }
@@ -135,8 +146,13 @@ QRgb ColorWheel::FromSphereImage(std::complex<double> zin)
     //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
     zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
     translated_x = (int) ((image_dim - 1)*(theta / (2.0*pi)));
     translated_y = (int) ((image_dim - 1)*(phi/ pi));
+=======
+    translated_x = (int) ((imageWidth - 1)*(theta / (2.0*pi)));
+    translated_y = (int) ((imageHeight - 1)*(phi/ pi));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
 
     color = image.pixel(translated_x, translated_y);
 
@@ -158,8 +174,13 @@ QRgb ColorWheel::FromSphereImageT(std::complex<double> zin)
     //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
    zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
     int translated_x = (int) ((theta / (2.0*pi)) * (image_dim - 1));
     int translated_y = (int) ((phi/ pi) * (image_dim - 1));
+=======
+    int translated_x = (int) ((theta / (2.0*pi)) * (imageWidth - 1));
+    int translated_y = (int) ((phi/ pi) * (imageHeight - 1));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
 
     color = image.pixel(translated_x, translated_y);
 
@@ -181,8 +202,13 @@ QRgb ColorWheel::FromSphereDMir(std::complex<double> zin)
     //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
     zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
     int translated_x = (int) ((image_dim - 1)*(theta / (2.0*pi)));
     int translated_y = (int) ((image_dim - 1)*(phi/ pi));
+=======
+    int translated_x = (int) ((imageWidth - 1)*(theta / (2.0*pi)));
+    int translated_y = (int) ((imageHeight - 1)*(phi/ pi));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
 
     color = image.pixel(translated_x, translated_y);
 
@@ -208,8 +234,13 @@ QRgb ColorWheel::FromSphereRNegMir(std::complex<double> zin)
         //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
         zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
         int translated_x = (int) ((image_dim - 1)*(theta / (2.0*pi)));
         int translated_y = (int) ((image_dim - 1)*(phi/ pi));
+=======
+        int translated_x = (int) ((imageWidth - 1)*(theta / (2.0*pi)));
+        int translated_y = (int) ((imageHeight - 1)*(phi/ pi));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
         colorInv = image.pixel(translated_x, translated_y);
         re=255-QColor(colorInv).red();
         g=255-QColor(colorInv).green();
@@ -221,8 +252,13 @@ QRgb ColorWheel::FromSphereRNegMir(std::complex<double> zin)
         //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
         zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
         int translated_x = (int) ((image_dim - 1)*(theta / (2.0*pi)));
         int translated_y = (int) ((image_dim - 1)*(phi/ pi));
+=======
+        int translated_x = (int) ((imageWidth - 1)*(theta / (2.0*pi)));
+        int translated_y = (int) ((imageHeight - 1)*(phi/ pi));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
        color = image.pixel(translated_x, translated_y);}
     }
     return color;
@@ -242,8 +278,13 @@ QRgb ColorWheel::FromSphereHMir(std::complex<double> zin)
     //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
     zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
     int translated_x = (int) ((image_dim - 1)*(theta / (2.0*pi)));
     int translated_y = (int) ((image_dim - 1)*(phi/ pi));
+=======
+    int translated_x = (int) ((imageWidth - 1)*(theta / (2.0*pi)));
+    int translated_y = (int) ((imageHeight - 1)*(phi/ pi));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
     color = image.pixel(translated_x, translated_y);
 
     return color;
@@ -269,8 +310,13 @@ QRgb ColorWheel::FromSphereHNegMir(std::complex<double> zin)
             //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
             zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
             int translated_x = (int) ((image_dim - 1)*(theta / (2.0*pi)));
             int translated_y = (int) ((image_dim - 1))*(phi/ pi);
+=======
+            int translated_x = (int) ((imageWidth - 1)*(theta / (2.0*pi)));
+            int translated_y = (int) ((imageHeight - 1))*(phi/ pi);
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
             color = image.pixel(translated_x, translated_y);
         }//Otherwise, use negative colors
         else{
@@ -278,8 +324,13 @@ QRgb ColorWheel::FromSphereHNegMir(std::complex<double> zin)
             //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
             zDataPoint = theta + Eye*phi;
 
+<<<<<<< HEAD
             int translated_x = (int) ((image_dim - 1)*(theta / (2.0*pi)));
             int translated_y = (int) ((image_dim - 1)*(phi/ pi)  );
+=======
+            int translated_x = (int) ((imageWidth - 1)*(theta / (2.0*pi)));
+            int translated_y = (int) ((imageHeight - 1)*(phi/ pi)  );
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
             colorInv = image.pixel(translated_x, translated_y);
             re=255-QColor(colorInv).red();
             g=255-QColor(colorInv).green();
@@ -316,8 +367,13 @@ QRgb ColorWheel::FromImageReverse(std::complex<double> zin)
         //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
         zDataPoint = theta +Eye*phi;
 
+<<<<<<< HEAD
         int translated_x = (int) ((x + 1.0) * ((image_dim - 1) / 2.0));
         int translated_y = (int) (image_dim - 1) - ((y + 1.0) * ((image_dim - 1) / 2.0));
+=======
+        int translated_x = (int) ((x + 1.0) * ((imageWidth - 1) / 2.0));
+        int translated_y = (int) (imageHeight - 1) - ((y + 1.0) * ((imageHeight - 1) / 2.0));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
 
         color = image.pixel(translated_x, translated_y);
     }
@@ -331,8 +387,13 @@ QRgb ColorWheel::FromImageReverse(std::complex<double> zin)
         //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
         zDataPoint = theta +Eye*phi;
 
+<<<<<<< HEAD
         int translated_x = (int) ((x + 1.0) * ((image_dim - 1) / 2.0));
         int translated_y = (int) (image_dim - 1) - ((y + 1.0) * ((image_dim - 1) / 2.0));
+=======
+        int translated_x = (int) ((x + 1.0) * ((imageWidth - 1) / 2.0));
+        int translated_y = (int) (imageHeight - 1) - ((y + 1.0) * ((imageHeight - 1) / 2.0));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
         colorInv = image.pixel(translated_x, translated_y);
          re=255-QColor(colorInv).red();
          g=255-QColor(colorInv).green();
@@ -365,8 +426,13 @@ QRgb ColorWheel::DiskToSphere(std::complex<double> zin)
         //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
         zDataPoint = theta +Eye*phi;
 
+<<<<<<< HEAD
         int translated_x = (int) ((x + 1.0) * ((image_dim - 1) / 2.0));
         int translated_y = (int) (image_dim - 1) - ((y + 1.0) * ((image_dim - 1) / 2.0));
+=======
+        int translated_x = (int) ((x + 1.0) * ((imageWidth - 1) / 2.0));
+        int translated_y = (int) (imageHeight - 1) - ((y + 1.0) * ((imageHeight - 1) / 2.0));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
         color = image.pixel(translated_x, translated_y);
     }
     else{//do circle inversion for points outside, to make it conts
@@ -380,8 +446,13 @@ QRgb ColorWheel::DiskToSphere(std::complex<double> zin)
         //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
         zDataPoint = theta +Eye*phi;
 
+<<<<<<< HEAD
         int translated_x = (int) ((x1 + 1.0) * ((image_dim - 1) / 2.0));
         int translated_y = (int) (image_dim - 1) - ((y1 + 1.0) * ((image_dim - 1) / 2.0));
+=======
+        int translated_x = (int) ((x1 + 1.0) * ((imageWidth - 1) / 2.0));
+        int translated_y = (int) (imageHeight - 1) - ((y1 + 1.0) * ((imageHeight - 1) / 2.0));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
         color = image.pixel(translated_x, translated_y);
         };
 
@@ -411,8 +482,13 @@ QRgb ColorWheel::FromImage(std::complex<double> zin)
         //This is a complex<double> type variable that stores the point and is used in renderthread to plot the points for the image data points.
         zDataPoint = theta +Eye*phi;
 
+<<<<<<< HEAD
         int translated_x = (int) ((x + 2.0) * ((image_dim - 1) / 4.0));
         int translated_y = (int) (image_dim - 1) - ((y + 2.0) * ((image_dim - 1) / 4.0));
+=======
+        int translated_x = (int) ((x + 2.0) * ((imageWidth - 1) / 4.0));
+        int translated_y = (int) (imageHeight - 1) - ((y + 2.0) * ((imageHeight - 1) / 4.0));
+>>>>>>> ac8dc628d75352a74b0cae7889ce940529884767
         color = image.pixel(translated_x, translated_y);
     }
     else {
