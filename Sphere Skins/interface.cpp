@@ -21,18 +21,16 @@ Interface::Interface(QWidget *parent) : QWidget(parent)
     
     // FUNCTIONAL OBJECTS
     functionVector.push_back(new zzbarFunction());
-    functionVector.push_back(new invFunction());
-    functionVector.push_back(new neginvFunction());
     functionVector.push_back(new tetraFunction());
     functionVector.push_back(new tetra3Function());
-    functionVector.push_back(new tetraColFunction());
     functionVector.push_back(new icosFunction());
     functionVector.push_back(new icos3Function());
-    functionVector.push_back(new tetraMFunction());
-    functionVector.push_back(new tetraHFunction());
-    functionVector.push_back(new icosHFunction());
     functionVector.push_back(new icos5Function());
     functionVector.push_back(new icos30Function());
+    functionVector.push_back(new tetraMFunction());
+    functionVector.push_back(new tetraColFunction());
+    functionVector.push_back(new invFunction());
+    functionVector.push_back(new neginvFunction());
     currFunction = functionVector[0];
     currColorWheel = new ColorWheel();
 
@@ -387,6 +385,7 @@ void Interface::initPatternType()
     setLoadedImage = new QPushButton(tr("Set/Change Image..."), patternTypeBox);
     functionLabel = new QLabel(patternTypeBox);
     colorwheelLabel = new QLabel(patternTypeBox);
+    functionNote = new QLabel(patternTypeBox);
     imagePathLabel = new QLabel(patternTypeBox);
     setTilt = new QPushButton(tr("Set Tilt"), patternTypeBox);
     
@@ -401,34 +400,32 @@ void Interface::initPatternType()
     }
     
     // function selector
-    functionSel->addItem("zzbar");
-    functionSel->addItem("invFunc");
-    functionSel->addItem("negInvFunc");
-    functionSel->addItem("tetraFunc");
-    functionSel->addItem("tetra3Func");
-    functionSel->addItem("tetraColFunc");
-    functionSel->addItem("icosFunc");
-    functionSel->addItem("icos3Func");
-    functionSel->addItem("tetraMFunc");
-    functionSel->addItem("tetraHFunc");
-    functionSel->addItem("icosHFunc");
-    functionSel->addItem("icos5Func");
-    functionSel->addItem("icos30Func");
-    //functionSel->addItem("ComplexPoly");
+    functionSel->addItem("Complex Poly");
+    functionSel->addItem("Tetra 2-C Poles");
+    functionSel->addItem("Tetra 3-C Poles");
+    functionSel->addItem("Icos 2-C Poles");
+    functionSel->addItem("Icos 3-C Poles");
+    functionSel->addItem("Icos 5-C Poles");
+    functionSel->addItem("icos 30");
+    functionSel->addItem("Tetra Mirror");
+    functionSel->addItem("Tetra 3-Color");
+    functionSel->addItem("Inversion Sym");
+    functionSel->addItem("Negative Inversion Sym");
     
     // color wheel selector
     colorwheelSel->addItem("ImageSquish");
     colorwheelSel->addItem("SphereImage");
     colorwheelSel->addItem("SphereImageT");
-    colorwheelSel->addItem("SphereDMir");
-    colorwheelSel->addItem("SphereRNegMir");
-    colorwheelSel->addItem("SphereHMir");
-    colorwheelSel->addItem("SphereHNegMir");
-    colorwheelSel->addItem("ImageReverse");
     colorwheelSel->addItem("DiskToSphere");
     colorwheelSel->addItem("FromImage");
+    colorwheelSel->addItem("ImageReverse");
+    colorwheelSel->addItem("SphereHMir");
+    colorwheelSel->addItem("SphereHNegMir");
+    colorwheelSel->addItem("SphereDMir");
+    colorwheelSel->addItem("SphereRNegMir");
     functionLabel->setText(tr("<b>Pattern<\b>"));
     colorwheelLabel->setText(tr("<b>Color<\b>"));
+    functionNote->setText(tr("NOTE: N-M should be even for tetrahedral and icoshedral functions."));
     
     //initialize function previews window
     functionIconsWindow = new QWidget(this, Qt::Window);
@@ -522,6 +519,8 @@ void Interface::initPatternType()
     functionLayout->addWidget(functionSel);
     functionLayout->addWidget(viewFunctionIconsButton);
     patternTypeBoxLayout->addLayout(functionLayout);
+    patternTypeBoxLayout->addWidget(functionNote);
+    functionNote->setEnabled(false);
     patternTypeBoxLayout->addWidget(endPattern);
     patternTypeBoxLayout->addWidget(colorwheelLabel);
     
@@ -1122,6 +1121,11 @@ void Interface::changeFunction(int index)
     newUpdate = false;
     
     termIndex = 0;
+
+    if(index == 0 || index > 8)
+        functionNote->setEnabled(false);
+    else
+        functionNote->setEnabled(true);
 
     currFunction = functionVector[index];
     numTerms = currFunction->getNumTerms();

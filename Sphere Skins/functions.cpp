@@ -424,7 +424,7 @@ std::complex<double> tetraMFunction::operator ()(double i, double j)
     ans *= scale.combined();
     return ans;
 }
-
+/*
 ////////////////////////////////////////////////////////////
 
 //NOTE: Some of the spherical harmonics seem to average to zero. Investigate!
@@ -482,7 +482,7 @@ std::complex<double> icosHFunction::operator ()(double i, double j)
 }
 
 ////////////////////////////////////////////////////////////
-
+*/
 //NOTE: This one is P20^3N over P12^5N. So poles at the 5 centers.
 
 std::complex<double> icos5Function::bundle(double &x, double &y, unsigned int &i) const

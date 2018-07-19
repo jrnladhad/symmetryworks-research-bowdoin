@@ -457,6 +457,7 @@ public:
     QLabel *numTermsLabel;
     QLabel *freqpairLabel;
     QLabel *coeffLabel;
+    QLabel *functionNote;
     QSpinBox *numTermsEdit;
     QSpacerItem *gspacer1;
     QSpacerItem *gspacer2;
