@@ -250,6 +250,7 @@ class icos30Function : public AbstractFunction
     virtual AbstractFunction* clone() const{return new icos30Function(*this);}
 };
 
+/*
 ///////////////////////////////////////////////////////////////
 
 //Tetrahedral symmetry done with spherical harmonics
@@ -287,4 +288,6 @@ class icosHFunction : public AbstractFunction
 };
 
 ///////////////////////////////////////////////////////////////
+
+*/
 #endif // FUNCTIONS_H

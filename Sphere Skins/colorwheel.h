@@ -48,8 +48,6 @@ private:
     int currentSel;
     QImage image;
     QColor overflowColor;
-    int imageWidth;
-    int imageHeight;
     std::complex<double> zDataPoint;
     std::complex<double> beta;
     
