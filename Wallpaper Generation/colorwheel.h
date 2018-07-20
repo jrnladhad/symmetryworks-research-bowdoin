@@ -15,7 +15,7 @@
 
 #include "geomath.h"
 
-#define image_dim 300
+#define image_dim 3000
 
 const unsigned int ICOS_FACES_SIZE = 20;
 const unsigned int ZONE_VECT_SIZE = 32;
@@ -54,15 +54,6 @@ private:
     QRgb SectCol(std::complex<double> zin);
     QRgb Sect6Col(std::complex<double> zin);
     QRgb WinCol(std::complex<double> zin);
-    QRgb ImageSquish(std::complex<double> zin);
-    QRgb FromSphereImage(std::complex<double> zin);
-    QRgb FromSphereImageT(std::complex<double> zin);
-    QRgb FromSphereDMir(std::complex<double> zin);
-    QRgb FromSphereRNegMir(std::complex<double> zin);
-    QRgb FromSphereHMir(std::complex<double> zin);
-    QRgb FromSphereHNegMir(std::complex<double> zin);
-    QRgb FromImageReverse(std::complex<double> zin);
-    QRgb DiskToSphere(std::complex<double> zin);
     QRgb FromImage(std::complex<double> zin);
     
     // COMPONENT VARIABLES
