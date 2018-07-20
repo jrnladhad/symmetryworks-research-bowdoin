@@ -38,18 +38,6 @@ Interface::Interface(QWidget *parent) : QWidget(parent)
     functionVector.push_back(new pgFunction());
     functionVector.push_back(new rhombicFunction());
     functionVector.push_back(new zzbarFunction());
-    functionVector.push_back(new invFunction());
-    functionVector.push_back(new neginvFunction());
-    functionVector.push_back(new tetraFunction());
-    functionVector.push_back(new tetraMFunction());
-    functionVector.push_back(new icosFunction());
-    functionVector.push_back(new tetraHFunction());
-    functionVector.push_back(new icosHFunction());
-    functionVector.push_back(new tetra3Function());
-    functionVector.push_back(new tetraColFunction());
-    functionVector.push_back(new icos3Function());
-    functionVector.push_back(new icos5Function());
-    functionVector.push_back(new icos30Function());
     currFunction = functionVector[0];
     currColorWheel = new ColorWheel();
     
@@ -500,19 +488,6 @@ void Interface::initPatternType()
     functionSel->addItem("pm");
     functionSel->addItem("pg");
     functionSel->addItem("cm");
-    functionSel->addItem("ZZbarFcn");
-    functionSel->addItem("invFcn");
-    functionSel->addItem("neginvFcn");
-    functionSel->addItem("tetraFcn");
-    functionSel->addItem("tetra d Mir");
-    functionSel->addItem("icosFcn");
-    functionSel->addItem("tetra harmonic");
-    functionSel->addItem("icos harmonic");
-    functionSel->addItem("Tetra 3");
-    functionSel->addItem("TetraColTurn");
-    functionSel->addItem("icos3 Fcn");
-    functionSel->addItem("icos5 Fcn");
-    functionSel->addItem("icos30 Fcn");
     functionSel->addItem("ComplexPoly");
     
     // color wheel selector
@@ -525,17 +500,7 @@ void Interface::initPatternType()
     colorwheelSel->addItem("SectCol");
     colorwheelSel->addItem("Sect6Col");
     colorwheelSel->addItem("WinCol");
-    colorwheelSel->addItem("SphereImage");
-    colorwheelSel->addItem("SphereImageTurn");
-    colorwheelSel->addItem("SphereDMir");
-    colorwheelSel->addItem("SphereHMir");
-    colorwheelSel->addItem("SphereRNegMir");
-    colorwheelSel->addItem("DiskToSphere");
-    colorwheelSel->addItem("Sect6Col");
-    colorwheelSel->addItem("ReversingImage");
-    colorwheelSel->addItem("ImageSquish");
     colorwheelSel->addItem("FromImage");
-    colorwheelSel->addItem("SphereHNegMir");
     functionLabel->setText(tr("<b>Pattern<\b>"));
     colorwheelLabel->setText(tr("<b>Color<\b>"));
     
