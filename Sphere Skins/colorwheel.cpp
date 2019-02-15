@@ -28,7 +28,8 @@ ColorWheel* ColorWheel::clone()
     ColorWheel *c = new ColorWheel();
     c->setCurrent(this->currentSel);
     c->changeOverflowColor(this->getOverflowColor());
-    
+    c->setBeta(this->getBeta().real(),this->getBeta().imag());
+
     if (!(this->image.isNull())) {
         c->image = this->image.copy();
     }

@@ -41,6 +41,8 @@ public:
 
     int getCurrentSel() {return currentSel;}
 
+    std::complex<double> getBeta(){return beta;}
+
     
 private:
     
